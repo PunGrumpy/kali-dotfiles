@@ -127,38 +127,6 @@ done
 sleep2
 clear
 
-###### ----- Checking Project is up to date ----- ######
-banner "📡 Checking Project is up to date..."
-
-if [[ -f "$HOME/.RiceInstaller.sh" ]]; then
-    echo -e "${YELLOW}⏳ Checking Project is up to date...${RESET}"
-    if [[ $(curl -s "$PROJECT_URL" | md5sum) != $(md5sum "$HOME/.RiceInstaller.sh") ]]; then
-        echo -e "${YELLOW}⏳ Updating Project...${RESET}"
-        curl -s "$PROJECT_URL" > "$HOME/.RiceInstaller.sh"
-        echo -e "${GREEN}✔️ Project updated${RESET}"
-    else
-        echo -e "${GREEN}✔️ Project already up to date${RESET}"
-    fi
-    sleep 1
-else
-    echo -e "${YELLOW}⏳ Downloading Project...${RESET}"
-    curl -s "$PROJECT_URL" > "$HOME/.RiceInstaller.sh"
-    echo -e "${GREEN}✔️ Project downloaded${RESET}"
-    sleep 1
-
-    echo -e "${YELLOW}⏳ Setting permissions...${RESET}"
-    chmod +x "$HOME/.RiceInstaller.sh"
-    echo -e "${GREEN}✔️ Permissions set${RESET}"
-    sleep 1
-
-    echo -e "${YELLOW}⏳ Starting Project...${RESET}"
-    "$HOME/.RiceInstaller.sh"
-    exit
-fi
-
-sleep 2
-clear
-
 ###### ----- Checking internet connection ----- ######
 banner "🌐 Checking internet connection..."
 
