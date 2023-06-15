@@ -52,7 +52,7 @@ esac
 case $_device in
     *MacBook*)     DEVICE="";;
     *mini*)        DEVICE="󰇄";;
-    *)             DEVICE="󱓇"
+    *)             DEVICE="󱓇 "
 esac
 
 export STARSHIP_DISTRO="$ICON"
