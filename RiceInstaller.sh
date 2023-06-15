@@ -22,6 +22,8 @@ BSPC_URL="https://github.com/bnoordhuis/bspc.git"
 
 FONT_HACK_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz"
 FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.tar.xz"
+FONT_AWESOME_URL="https://github.com/PunGrumpy/gh0stzk-dotfiles/raw/master/misc/fonts/FontAwesome6-Free-Solid.otf"
+FONT_MATERIAL_DESIGN_URL="https://github.com/PunGrumpy/gh0stzk-dotfiles/raw/master/misc/fonts/FontAwesome6-Free-Solid.otf"
 
 DATE=$(date +"%A %d %B %Y (%H:%M:%S)")
 
@@ -245,7 +247,7 @@ clear
 dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
-bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger \
+bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl \
 libx11-dev libxft-dev libxinerama-dev \
 libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev \
 cmake-data python3-sphinx libcairo2-dev libxcb1-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev \
@@ -512,16 +514,21 @@ banner "🔗 Linking files..."
 
 DOTFILE_DIR="$HOME/.dotfiles"
 
-echo -e "${BOLD}${YELLOW}Linking dotfiles...${RESET}\n"
-if [[ -d "$HOME/.dotfiles" ]]; then
-    for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig; do
-            linking "$file" "$HOME"
-            sleep 1
-    done
-else
-    echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
-    exit 1
-fi
+# ask user for linking files
+read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
+    case $yn in
+        [Yy]* ) if [[ -d "$HOME/.dotfiles" ]]; then
+                    for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig; do
+                        linking "$file" "$HOME"
+                        sleep 1
+                    done
+                else
+                    echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
+                    exit 1
+                fi;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
 
 sleep 2
 clear
@@ -667,6 +674,26 @@ else
     echo -e "${RED}✖️ JetBrains Mono font not installed${RESET}"
 fi
 
+echo -e "${YELLOW}⏳ Installing Font Awesome font...${RESET}"
+curl -L "$FONT_AWESOME_URL" -o "$HOME/.local/share/fonts/FontAwesome.tar.xz"
+tar -xf "$HOME/.local/share/fonts/FontAwesome.tar.xz" -C "$HOME/.local/share/fonts"
+rm -rf "$HOME/.local/share/fonts/FontAwesome.tar.xz"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✔️ Font Awesome font installed${RESET}"
+else
+    echo -e "${RED}✖️ Font Awesome font not installed${RESET}"
+fi
+
+echo -e "${YELLOW}⏳ Installing Material Design Icons font...${RESET}"
+curl -L "$FONT_MATERIAL_DESIGN_URL" -o "$HOME/.local/share/fonts/MaterialDesignIcons.tar.xz"
+tar -xf "$HOME/.local/share/fonts/MaterialDesignIcons.tar.xz" -C "$HOME/.local/share/fonts"
+rm -rf "$HOME/.local/share/fonts/MaterialDesignIcons.tar.xz"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✔️ Material Design Icons font installed${RESET}"
+else
+    echo -e "${RED}✖️ Material Design Icons font not installed${RESET}"
+fi
+
 sleep 2
 clear
 
@@ -677,6 +704,7 @@ if [[ -f "$HOME/.dotfiles/.config/bspwm" ]]; then
     cd "$HOME/.dotfiles/.config/bspwm"
     chmod +x bspwmrc
     chmod +x scripts/*
+    cd $HOME
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ Permissions BSPWM${RESET}"
     else
