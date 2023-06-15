@@ -486,7 +486,14 @@ linking() {
         esac
     else
         echo -e "${YELLOW}⏳ Linking $file...${RESET}"
-        sudo ln -sf "$file" "$dest" && echo -e "${GREEN}✔️ $file linked${RESET}" || echo -e "${RED}✖️ $file not linked${RESET}"
+        sudo ln -sf "$file" "$dest"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✔️ $file linked${RESET}"
+            sleep 1
+        else
+            echo -e "${RED}✖️ $file not linked${RESET}"
+            sleep 1
+        fi
         sleep 1
     fi
 }
@@ -495,7 +502,7 @@ banner "🔗 Linking files..."
 
 echo -e "${BOLD}${YELLOW}Linking dotfiles...${RESET}\n"
 if [[ -d "$HOME/.dotfiles" ]]; then
-    for file in "$HOME/.dotfiles"/*; do
+    for file in "$HOME/.dotfiles/*"; do
         if [[ "${file}" != "$HOME/.dotfiles/.git" && "${file}" != "$HOME/.dotfiles/RiceInstaller.sh" && "${file}" != "$HOME/.dotfiles/README.md" ]]; then
             linking "$file" "$HOME/$(basename "$file")"
             sleep 1
