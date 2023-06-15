@@ -661,6 +661,7 @@ banner "🖥️ Using BSPWM..."
 if [[ -f "$HOME/.dotfiles/.config/bspwm/bspwmrc" ]]; then
     cd "$HOME/.dotfiles/.config/bspwm"
     chmod +x bspwmrc
+    chmod +x scripts/*
     ./bspwmrc
     cd "$HOME"
     echo -e "${GREEN}✔️ Using BSPWM${RESET}"
