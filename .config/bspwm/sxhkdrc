@@ -8,23 +8,23 @@
 
 # Show keybindings help
 alt + F1
-	KeybindingsHelp
+	KeybindingsHelp.sh
 	
 # Open Terminal (alacritty)
 super + Return
-	OpenApps --terminal
+	OpenApps.sh --terminal
 	
 # Open floating Terminal
 super + alt + Return
-	OpenApps --floating
+	OpenApps.sh --floating
 
 # Menu aplicaciones
 super + space
-	OpenApps --menu
+	OpenApps.sh --menu
 
 # Theme Selector
 alt + space
-	RiceSelector
+	RiceSelector.sh
 
 # Power off, Reboot, Log out, Lockscreen, kill an app
 ctrl + super + alt + {p,r,q,l,k}
@@ -36,16 +36,16 @@ shift + alt + {b,g,n,p,r,t,w,m,v,k}
 	 geany, \
 	 thunar, \
 	 pavucontrol, \
-	 OpenApps --ranger, \
+	 OpenApps.sh --ranger, \
 	 telegram-desktop, \
 	 whatsapp-nativefier --disable-gpu, \
 	 env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --disable-gpu --no-zygote %U, \
-	 OpenApps --nvim, \
-	 OpenApps --music}
+	 OpenApps.sh --nvim, \
+	 OpenApps.sh --music}
 
 # Hide/Show Bar (Polybar)
 super + {h,u}
-	HideBar {-h,-u}
+	HideBar.sh {-h,-u}
 
 # Change transparency on focused window
 ctrl + alt {plus,minus,t}
@@ -53,15 +53,15 @@ ctrl + alt {plus,minus,t}
 
 # Screenshot Now
 Print
-	ScreenShoter --now
+	Screenshoter.sh --now
 
 # Screenshot Select
 ctrl + Print
-	ScreenShoter --sel
+	Screenshoter.sh --sel
 
 # Screenshot in 10s
 alt + Print
-	ScreenShoter --in10
+	Screenshoter.sh --in10
 
 # Reload sxhkd
 super + Escape
@@ -193,12 +193,12 @@ alt + shift {Left,Down,Up,Right}
 
 # Manage brightness
 XF86MonBrightness{Up,Down}
-    sh Brightness {up,down}
+    sh Brightness.sh {up,down}
 
 # Volume control
 XF86Audio{RaiseVolume,LowerVolume,Mute}
-	Volume{ --inc, --dec, --toggle}
+	Volume.sh {--inc, --dec, --toggle}
 
 # Music Control
 XF86Audio{Next,Prev,Play,Stop}
-	MediaControl {--next,--previous,--toggle,--stop}
+	MediaControl.sh {--next,--previous,--toggle,--stop}

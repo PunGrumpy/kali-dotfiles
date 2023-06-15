@@ -14,7 +14,7 @@ case "$1" in
 		 -theme $HOME/.config/bspwm/rices/${RICETHEME}/launcher.rasi;;
 
   --rice)
-	RiceSelector;;
+    RiceSelector.sh;;
 
   --terminal)
     alacritty;;
@@ -34,7 +34,7 @@ case "$1" in
 	alacritty --hold --class Updating,Alacritty \
 					-o window.dimensions.lines=22 \
 					   window.dimensions.columns=47 \
-					-e Updates --print-updates;;
+					-e Updates.sh --print-updates;;
 
   --ranger)
     alacritty --class FloaTerm,Alacritty \

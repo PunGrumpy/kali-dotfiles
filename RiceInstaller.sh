@@ -252,8 +252,7 @@ dependencies_brew=(git gcc \
 tmux neovim starship antibody docker \
 peco exa dockercolorize \
 python3 pyenv go node pnpm \
-fzf ripgrep fd bat \
-yq hub)
+fzf fd bat hub)
 
 aptIsInstalled() {
     if apt list --installed 2>/dev/null | grep -q "^$1/"; then
