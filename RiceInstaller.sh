@@ -508,10 +508,11 @@ linking() {
 
 banner "🔗 Linking files..."
 
+DOTFILE_DIR="$HOME/.dotfiles"
+
 echo -e "${BOLD}${YELLOW}Linking dotfiles...${RESET}\n"
 if [[ -d "$HOME/.dotfiles" ]]; then
-    for file in $HOME/.dotfiles/*; do
-        if [[ "${file}" != "$HOME/.dotfiles/.git" && "${file}" != "$HOME/.dotfiles/RiceInstaller.sh" && "${file}" != "$HOME/.dotfiles/README.md" && "${file}" != "$HOME/.dotfiles/.github" ]]; then
+    for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig; do
             linking "$file" "$HOME"
             sleep 1
         fi
