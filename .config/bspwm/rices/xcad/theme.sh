@@ -25,10 +25,6 @@ set_bspwm_config() {
 
 # Reload terminal colors
 set_term_config() {
-    sed -i "$HOME"/.config/alacritty/fonts.yml \
-        -e "s/family: .*/family: Hack Nerd Font/g" \
-        -e "s/size: .*/size: 10/g"
-
     cat "$HOME"/.dotfiles/.config/bspwm/rices/xcad/colors.yml > "$HOME"/.config/alacritty/colors.yml
 }
 
@@ -48,7 +44,7 @@ set_dunst_config() {
         -e "s/transparency = .*/transparency = 8/g" \
         -e "s/frame_color = .*/frame_color = \"#1B1B1B\"/g" \
         -e "s/separator_color = .*/separator_color = \"#2883FF\"/g" \
-        -e "s/font = .*/font = JetBrainsMono Nerd Font Medium 9/g" \
+        -e "s/font = .*/font = Hack Nerd Font 9/g" \
         -e "s/foreground='.*'/foreground='#2883FF'/g"
 
     sed -i '/urgency_low/Q' "$HOME"/.config/bspwm/dunstrc

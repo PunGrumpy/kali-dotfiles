@@ -514,7 +514,6 @@ if [[ -d "$HOME/.dotfiles" ]]; then
     for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig; do
             linking "$file" "$HOME"
             sleep 1
-        fi
     done
 else
     echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
