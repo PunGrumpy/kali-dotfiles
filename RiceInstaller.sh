@@ -644,7 +644,10 @@ else
         git clone "$NERD_FONT_URL" "$HOME/.nerd-fonts"
         exit 1
     fi
-    cd "$HOME/.nerd-fonts" && ./install.sh Hack
+    cd "$HOME/.nerd-fonts"
+    ./install.sh Hack
+    ./install.sh JetBrainsMono
+    ./install.sh MesloLGS
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ Hack Nerd Font installed${RESET}"
     else

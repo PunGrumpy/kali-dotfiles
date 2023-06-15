@@ -17,18 +17,13 @@ elif [[ -f $MFILE ]]; then
 
   # on mac os use the systemprofiler to determine the current model
   _device=$(system_profiler SPHardwareDataType | awk '/Model Name/ {print $3,$4,$5,$6,$7}')
-
-  case $_device in
-    *MacBook*)     DEVICE="";;
-    *mini*)        DEVICE="󰇄";;
-    *)             DEVICE=""
-  esac
 fi
 
 # set an icon based on the distro
 # make sure your font is compatible with https://github.com/lukas-w/font-logos
 case $_distro in
     *kali*)                  ICON="ﴣ";;
+    *kali-rolling*)          ICON="ﴣ";;
     *arch*)                  ICON="";;
     *debian*)                ICON="";;
     *raspbian*)              ICON="";;
@@ -52,6 +47,12 @@ case $_distro in
     *macos*)                 ICON="";;
     *docker*)                ICON="";;
     *)                       ICON="";;
+esac
+
+case $_device in
+    *MacBook*)     DEVICE="";;
+    *mini*)        DEVICE="󰇄";;
+    *)             DEVICE=""
 esac
 
 export STARSHIP_DISTRO="$ICON"
