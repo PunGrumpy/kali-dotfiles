@@ -16,7 +16,6 @@ BOLD=$(tput bold)
 BEEP=$(tput blink)
 RESET=$(tput sgr0)
 
-PROJECT_URL="https://raw.githubusercontent.com/PunGrumpy/kali-dotfiles/main/RiceInstaller.sh"
 DOTFILE_URL="https://github.com/PunGrumpy/kali-dotfiles.git"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts.git"
 BSPC_URL="https://github.com/bnoordhuis/bspc.git"
