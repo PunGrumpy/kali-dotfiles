@@ -255,8 +255,16 @@ python3 pyenv go node pnpm \
 fzf ripgrep fd bat \
 jq yq hub)
 
-isInstalled() {
-    if command -v "$1" >/dev/null; then
+aptIsInstalled() {
+    if apt list --installed 2>/dev/null | grep -q "^$1/"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+brewIsInstalled() {
+    if brew list 2>/dev/null | grep -q "^$1\$"; then
         return 0
     else
         return 1
@@ -268,7 +276,7 @@ banner "📦 Installing dependencies..."
 echo -e "${BOLD}${YELLOW}Installing missing dependencies using ${RED}apt${RESET}${BOLD}${YELLOW}...${RESET}\n"
 
 for i in "${dependencies_apt[@]}"; do
-    if ! isInstalled "$i"; then
+    if ! aptIsInstalled "$i"; then
         echo -e "${YELLOW}⏳ Installing $i...${RESET}"
         sudo apt install "$i" -y
         if [ $? -eq 0 ]; then
@@ -291,7 +299,7 @@ banner "📦 Installing dependencies..."
 echo -e "\n${BOLD}${YELLOW}Installing missing dependencies using ${RED}brew${RESET}${BOLD}${YELLOW}${RESET}\n"
 
 for i in "${dependencies_tap_brew[@]}"; do
-    if ! brew tap | grep "$i"; then
+    if ! brew tap | grep -q "$i"; then
         echo -e "${YELLOW}⏳ Tapping $i...${RESET}"
         brew tap "$i"
         if [ $? -eq 0 ]; then
@@ -307,7 +315,7 @@ for i in "${dependencies_tap_brew[@]}"; do
 done
 
 for i in "${dependencies_brew[@]}"; do
-    if ! isInstalled "$i"; then
+    if ! brewIsInstalled "$i"; then
         echo -e "${YELLOW}⏳ Installing $i...${RESET}"
         brew install "$i"
         if [ $? -eq 0 ]; then
