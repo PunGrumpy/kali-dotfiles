@@ -10,9 +10,9 @@
 
 # Important variables
 read -r RICETHEME < "$HOME/.config/bspwm/.ricetheme"
-export RICETHEME="xcad"
+export RICETHEME
 CONFIG_DIR="$HOME/.config/bspwm"
-RICE_DIR="$CONFIG_DIR/bspwm/rices/$RICETHEME"
+RICE_DIR="$CONFIG_DIR/rices/$RICETHEME"
 PATH="$HOME/.config/bspwm/scripts:$PATH"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
@@ -60,4 +60,4 @@ picom -b --config $CONFIG_DIR/picom.conf
 sxhkd -c $CONFIG_DIR/sxhkdrc
 
 # Dunst
-dunst -config $CONFIG_DIR/dunst/dunstrc
+dunst -config $CONFIG_DIR/dunstrc
