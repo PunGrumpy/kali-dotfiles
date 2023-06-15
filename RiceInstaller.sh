@@ -20,6 +20,9 @@ DOTFILE_URL="https://github.com/PunGrumpy/kali-dotfiles.git"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts.git"
 BSPC_URL="https://github.com/bnoordhuis/bspc.git"
 
+FONT_HACK_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz"
+FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.tar.xz"
+
 DATE=$(date +"%A %d %B %Y (%H:%M:%S)")
 
 ascii_ghost() {
@@ -634,25 +637,34 @@ clear
 ###### ----- Installing fonts ----- ######
 banner "🔠 Installing fonts..."
 
-if [[ -f "$HOME/.local/share/fonts/Hack Nerd Font Complete.ttf" ]]; then
-    echo -e "${GREEN}✔️ Hack Nerd Font already installed${RESET}"
+if [[ -d "$HOME/.local/share/fonts" ]]; then
+    echo -e "${GREEN}✔️ Fonts folder already created${RESET}"
+    sleep 1
 else
-    if [[ -d "$HOME/.nerd-fonts" ]]; then
-        echo -e "${GREEN}✔️ nerd-fonts already cloned${RESET}"
-    else
-        echo -e "${RED}✖️ nerd-fonts not cloned${RESET}"
-        git clone "$NERD_FONT_URL" "$HOME/.nerd-fonts"
-        exit 1
-    fi
-    cd "$HOME/.nerd-fonts"
-    ./install.sh Hack
-    ./install.sh JetBrainsMono
-    ./install.sh MesloLGS
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ Hack Nerd Font installed${RESET}"
-    else
-        echo -e "${RED}✖️ Hack Nerd Font not installed${RESET}"
-    fi
+    echo -e "${YELLOW}⏳ Creating fonts folder...${RESET}"
+    mkdir -p "$HOME/.local/share/fonts"
+    echo -e "${GREEN}✔️ Fonts folder created${RESET}"
+    sleep 1
+fi
+
+echo -e "${YELLOW}⏳ Installing Hack font...${RESET}"
+curl -L "$FONT_HACK_URL" -o "$HOME/.local/share/fonts/Hack.tar.xz"
+tar -xf "$HOME/.local/share/fonts/Hack.tar.xz" -C "$HOME/.local/share/fonts"
+rm -rf "$HOME/.local/share/fonts/Hack.tar.xz"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✔️ Hack font installed${RESET}"
+else
+    echo -e "${RED}✖️ Hack font not installed${RESET}"
+fi
+
+echo -e "${YELLOW}⏳ Installing JetBrains Mono font...${RESET}"
+curl -L "$FONT_JETBRAINS_URL" -o "$HOME/.local/share/fonts/JetBrainsMono.tar.xz"
+tar -xf "$HOME/.local/share/fonts/JetBrainsMono.tar.xz" -C "$HOME/.local/share/fonts"
+rm -rf "$HOME/.local/share/fonts/JetBrainsMono.tar.xz"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✔️ JetBrains Mono font installed${RESET}"
+else
+    echo -e "${RED}✖️ JetBrains Mono font not installed${RESET}"
 fi
 
 sleep 2
