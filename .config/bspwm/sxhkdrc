@@ -22,6 +22,10 @@ super + alt + Return
 super + space
 	OpenApps --menu
 
+# Theme Selector
+alt + space
+	RiceSelector
+
 # Power off, Reboot, Log out, Lockscreen, kill an app
 ctrl + super + alt + {p,r,q,l,k}
 	{systemctl poweroff, systemctl reboot,bspc quit,physlock -d,xkill}
@@ -65,7 +69,7 @@ super + Escape
 
 # Random wallpaper
 super + alt + w
-	feh -z --no-fehbg --bg-fill ~/.config/bspwm/rices/$RICETHEME/walls/
+	feh -z --no-fehbg --bg-fill ~/.config/bspwm/rices/$RICETHEME/wallpaper
 
 #
 # bspwm hotkeys
