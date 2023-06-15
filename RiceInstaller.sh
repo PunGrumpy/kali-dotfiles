@@ -658,16 +658,18 @@ fi
 sleep 2
 clear
 
-###### ----- Using BSPWM ----- ######
-banner "🖥️ Using BSPWM..."
+##### ----- Permissions BSPWM ----- ######
+banner "🖥️ Permissions BSPWM..."
 
-if [[ -f "$HOME/.dotfiles/.config/bspwm/bspwmrc" ]]; then
+if [[ -f "$HOME/.dotfiles/.config/bspwm" ]]; then
     cd "$HOME/.dotfiles/.config/bspwm"
     chmod +x bspwmrc
     chmod +x scripts/*
-    ./bspwmrc
-    cd "$HOME"
-    echo -e "${GREEN}✔️ Using BSPWM${RESET}"
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Permissions BSPWM${RESET}"
+    else
+        echo -e "${RED}✖️ Permissions BSPWM${RESET}"
+    fi
     sleep 1
 else
     echo -e "${RED}✖️ .dotfiles/.config/bspwm/bspwmrc not found${RESET}"
