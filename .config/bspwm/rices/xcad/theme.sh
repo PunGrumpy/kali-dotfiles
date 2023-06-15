@@ -30,35 +30,35 @@ set_term_config() {
 		-e "s/size: .*/size: 10/g"
 
 		cat > "$HOME"/.config/alacritty/colors.yml <<- _EOF_
-				# Colors Xcad Rice
+				# Colors (Xcad)
 				colors:
-					primary:
-						background: '#1B1B1B'
-						foreground: '#F1F1F1'
+				  primary:
+				    background: '#1B1B1B'
+					foreground: '#F1F1F1'
 
-					normal:
-						black: '#121212'
-						red: '#A52AFF'
-						green: '#7129FF'
-						yellow: '#3D2AFF'
-						blue: '#2B4FFF'
-						magenta: '#2883FF'
-						cyan: '#28B9FF'
-						white: '#F1F1F1'
+				  normal:
+				    black: '#121212'
+					red: '#A52AFF'
+					green: '#7129FF'
+					yellow: '#3D2AFF'
+					blue: '#2B4FFF'
+					magenta: '#2883FF'
+					cyan: '#28B9FF'
+					white: '#F1F1F1'
 
-					bright:
-						black: '#666666'
-						red: '#BA5AFF'
-						green: '#905AFF'
-						yellow: '#685AFF'
-						blue: '#5C78FF'
-						magenta: '#5EA2FF'
-						cyan: '#5AC8FF'
-						white: '#FFFFFF'
+				  bright:
+				    black: '#666666'
+					red: '#BA5AFF'
+					green: '#905AFF'
+					yellow: '#685AFF'
+					blue: '#5C78FF'
+					magenta: '#5EA2FF'
+					cyan: '#5AC8FF'
+					white: '#FFFFFF'
 
-					cursor:
-						cursor: '#FFFFFF'
-						text: '#1B1B1B'
+				  cursor:
+				    cursor: '#FFFFFF'
+					text: '#1B1B1B'
 _EOF_
 }
 
