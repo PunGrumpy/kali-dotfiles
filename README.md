@@ -23,13 +23,19 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 
 ## `📦` Installation
 
+### `📥` Prerequisites
+
 ```bash
 curl https://raw.githubusercontent.com/PunGrumpy/kali-dotfiles/main/RiceInstaller.sh -o $HOME/.RiceInstaller.sh
 ```
 
+### `📥` Installation
+
 ```bash
 chmod +x $HOME/.RiceInstaller.sh
 ```
+
+### `📥` Usage
 
 ```bash
 $HOME/.RiceInstaller.sh
