@@ -247,11 +247,12 @@ clear
 dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
-bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl \
+bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl papirus-icon-theme \
 libx11-dev libxft-dev libxinerama-dev \
 libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev \
 cmake-data python3-sphinx libcairo2-dev libxcb1-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev \
 libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libuv1-dev libnl-genl-3-dev)
+dependencies_apt_repo=(ppa:papirus/papirus)
 dependencies_tap_brew=(pungrumpy/formulas)
 dependencies_brew=(git gcc \
 tmux neovim starship antibody docker \
@@ -278,6 +279,22 @@ brewIsInstalled() {
 banner "📦 Installing dependencies..."
 
 echo -e "${BOLD}${YELLOW}Installing missing dependencies using ${RED}apt${RESET}${BOLD}${YELLOW}...${RESET}\n"
+
+for i in "${dependencies_apt_repo[@]}"; do
+    if ! apt-cache policy | grep -q "$i"; then
+        echo -e "${YELLOW}⏳ Adding $i...${RESET}"
+        sudo add-apt-repository "$i"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✔️ $i added${RESET}"
+            sleep 1
+        else
+            echo -e "${RED}✖️ $i not added${RESET}"
+            sleep 1
+        fi
+    else
+        echo -e "${GREEN}✔️ $i already added${RESET}"
+    fi
+done
 
 for i in "${dependencies_apt[@]}"; do
     if ! aptIsInstalled "$i"; then

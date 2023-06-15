@@ -27,7 +27,7 @@ configuration {
 
 /*****----- Global Properties -----*****/
 * {
-    font:                        "Hack Nerd Font Bold 9";
+    font:                        "Hack Nerd Font 9";
     background:                  #1B1B1B;
     background-alt:              #1B1B1B;
     foreground:                  #AFB1DB;
