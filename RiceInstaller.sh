@@ -127,21 +127,6 @@ done
 sleep2
 clear
 
-###### ----- Checking if you are using Kali Linux ----- ######
-banner "🐧 Checking if you are using Kali Linux..."
-
-if [[ -f "/etc/kali-release" ]]; then
-    echo -e "${GREEN}✔️ You are using Kali Linux${RESET}"
-    sleep 1
-else
-    echo -e "${RED}✖️ You are not using Kali Linux${RESET}"
-    sleep 1
-    exit 1
-fi
-
-sleep 2
-clear
-
 ###### ----- Checking Project is up to date ----- ######
 banner "📡 Checking Project is up to date..."
 
