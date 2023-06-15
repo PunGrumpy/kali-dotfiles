@@ -239,7 +239,7 @@ sleep 2
 clear
 
 ###### ----- Installing dependencies ----- ######
-dependencies_apt=(curl wget zsh neofetch build-essential alacritty \
+dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
 bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger \
@@ -253,7 +253,7 @@ tmux neovim starship antibody docker \
 peco exa dockercolorize \
 python3 pyenv go node pnpm \
 fzf ripgrep fd bat \
-jq yq hub)
+yq hub)
 
 aptIsInstalled() {
     if apt list --installed 2>/dev/null | grep -q "^$1/"; then
