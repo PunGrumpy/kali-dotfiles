@@ -399,6 +399,82 @@ fi
 sleep 2
 clear
 
+###### ----- Installing google chrome ----- ######
+banner "📦 Installing google chrome..."
+
+if ! command -v flatpak run com.google.Chrome >/dev/null; then
+    flatpak install flathub com.google.Chrome
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ google chrome installed${RESET}"
+    else
+        echo -e "${RED}✖️ google chrome not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ google chrome already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
+###### ----- Installing spotify ----- ######
+banner "📦 Installing spotify..."
+
+if ! command -v flatpak run com.spotify.Client >/dev/null; then
+    flatpak install flathub com.spotify.Client
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ spotify installed${RESET}"
+    else
+        echo -e "${RED}✖️ spotify not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ spotify already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
+###### ----- Installing discord ----- ######
+banner "📦 Installing discord..."
+
+if ! command -v flatpak run com.discordapp.Discord >/dev/null; then
+    flatpak install flathub com.discordapp.Discord
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ discord installed${RESET}"
+    else
+        echo -e "${RED}✖️ discord not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ discord already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
+###### ----- Installing vscode ----- ######
+banner "📦 Installing vscode..."
+
+if ! command -v flatpak run com.visualstudio.code >/dev/null; then
+    flatpak install flathub com.visualstudio.code
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ vscode installed${RESET}"
+    else
+        echo -e "${RED}✖️ vscode not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ vscode already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
 ###### ----- Backup ----- ######
 banner "📦 Creating backup..."
 
