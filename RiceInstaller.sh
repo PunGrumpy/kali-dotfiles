@@ -496,8 +496,8 @@ banner "🔗 Linking files..."
 echo -e "${BOLD}${YELLOW}Linking dotfiles...${RESET}\n"
 if [[ -d "$HOME/.dotfiles" ]]; then
     for file in "$HOME/.dotfiles"/*; do
-        if [[ "${file}" != "$HOME/.dotfiles/.git" && "${file}" != "$HOME/.dotfiles/RiceInstaller.sh" ]]; then
-            linking "$file" "$HOME/.$(basename "$file")"
+        if [[ "${file}" != "$HOME/.dotfiles/.git" && "${file}" != "$HOME/.dotfiles/RiceInstaller.sh" && "${file}" != "$HOME/.dotfiles/README.md" ]]; then
+            linking "$file" "$HOME/$(basename "$file")"
             sleep 1
         fi
     done
