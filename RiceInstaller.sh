@@ -463,7 +463,7 @@ banner "📦 Installing commitizen..."
 
 if ! command -v cz >/dev/null; then
     echo -e "${YELLOW}⏳ Installing commitizen...${RESET}"
-    sudo npm install -g cz-emoji
+    sudo npm install -g cz-emoji commitizen
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ commitizen installed${RESET}"
     else
