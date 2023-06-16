@@ -25,6 +25,8 @@ FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3
 FONT_AWESOME_URL="https://github.com/PunGrumpy/gh0stzk-dotfiles/raw/master/misc/fonts/FontAwesome6-Free-Solid.otf"
 FONT_MATERIAL_DESIGN_URL="https://github.com/gh0stzk/dotfiles/raw/master/misc/fonts/MaterialDesignIconsDesktop.ttf"
 
+DOTFILE_DIR="$HOME/.dotfiles"
+
 DATE=$(date +"%A %d %B %Y (%H:%M:%S)")
 
 ascii_ghost() {
@@ -605,8 +607,6 @@ linking() {
 
 banner "🔗 Linking files..."
 
-DOTFILE_DIR="$HOME/.dotfiles"
-
 read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
     case $yn in
         [Yy]* ) if [[ -d "$HOME/.dotfiles" ]]; then
@@ -617,17 +617,54 @@ read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
                 else
                     echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
                     exit 1
-                fi
+                fi;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
 
-                if [[ -d "$HOME/.dotfiles/" ]]; then
-                    for file in $DOTFILE_DIR/.config/.blackbox; do
-                        if [[ -d "$HOME"/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes ]]; then
-                            linking "$file" "$HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/"
-                            sleep 1
-                        else
-                            echo -e "${RED}✖️ $file not linked${RESET}"
-                            sleep 1
-                        fi
+sleep 2
+clear
+
+###### ----- Installing Copying files ----- ######
+banner "📂 Copying files..."
+
+copying() {
+    local file="${1:?}"
+    local dest="${2:?}"
+
+    if [[ -f "$dest" ]]; then
+        echo -e "${GREEN}✔️ $file already copied${RESET}"
+        read -rp "⚠️ Do you want to delete the existing $file? [Y/n] " yn
+        case $yn in
+            [Yy]* ) rm -rf "$dest" ;;
+            [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n" ;;
+            * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n" ;;
+        esac
+    else
+        echo -e "${YELLOW}⏳ Copying $file...${RESET}"
+        sudo cp -r "$file" "$dest"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✔️ $file copied${RESET}"
+            sleep 1
+        else
+            echo -e "${RED}✖️ $file not copied${RESET}"
+            sleep 1
+        fi
+        sleep 1
+    fi
+}
+
+read -rp "⚠️ Do you want to copy your dotfiles? [Y/n] " yn
+    case $yn in
+        [Yy]* ) if [[ -d "$HOME/.dotfiles" ]]; then
+                    for $file in $DOTFILE_DIR/.config/blackbox; do
+                        copying "$file" "$HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes"
+                        sleep 1
+                    done
+                else
+                    echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
+                    exit 1
+                fi;;
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
     esac
