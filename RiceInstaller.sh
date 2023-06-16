@@ -607,7 +607,6 @@ banner "🔗 Linking files..."
 
 DOTFILE_DIR="$HOME/.dotfiles"
 
-# ask user for linking files
 read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
     case $yn in
         [Yy]* ) if [[ -d "$HOME/.dotfiles" ]]; then
@@ -618,7 +617,17 @@ read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
                 else
                     echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
                     exit 1
-                fi;;
+                fi
+
+                if [[ -d "$HOME/.dotfiles/" ]]; then
+                    for file in $DOTFILE_DIR/.config/.blackbox; do
+                        if [[ -d "$HOME"/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes ]]; then
+                            linking "$file" "$HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/"
+                            sleep 1
+                        else
+                            echo -e "${RED}✖️ $file not linked${RESET}"
+                            sleep 1
+                        fi
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
     esac

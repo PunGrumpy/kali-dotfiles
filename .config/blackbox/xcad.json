@@ -1,0 +1,25 @@
+{
+  "name": "Xcad",
+  "comment": "Blue and purple theme with a dark background",
+  "use-theme-colors": false,
+  "foreground-color": "#F1F1F1",
+  "background-color": "#1B1B1B",
+  "palette": [
+    "#121212",
+    "#A52AFF",
+    "#2883FF",
+    "#3D2AFF",
+    "#2B4FFF",
+    "#BA5AFF",
+    "#5EA2FF",
+    "#F1F1F1",
+    "#666666",
+    "#685AFF",
+    "#5AC8FF",
+    "#A51FFF",
+    "#7129FF",
+    "#FFA29F",
+    "#1CFAFE",
+    "#FFFFFF"
+  ]
+}
