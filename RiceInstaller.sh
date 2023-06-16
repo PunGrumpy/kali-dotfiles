@@ -23,7 +23,7 @@ BSPC_URL="https://github.com/bnoordhuis/bspc.git"
 FONT_HACK_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz"
 FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.tar.xz"
 FONT_AWESOME_URL="https://github.com/PunGrumpy/gh0stzk-dotfiles/raw/master/misc/fonts/FontAwesome6-Free-Solid.otf"
-FONT_MATERIAL_DESIGN_URL="https://github.com/PunGrumpy/gh0stzk-dotfiles/raw/master/misc/fonts/FontAwesome6-Free-Solid.otf"
+FONT_MATERIAL_DESIGN_URL="https://github.com/gh0stzk/dotfiles/raw/master/misc/fonts/MaterialDesignIconsDesktop.ttf"
 
 DATE=$(date +"%A %d %B %Y (%H:%M:%S)")
 
@@ -768,9 +768,7 @@ else
 fi
 
 echo -e "${YELLOW}⏳ Installing Font Awesome font...${RESET}"
-curl -L "$FONT_AWESOME_URL" -o "$HOME/.local/share/fonts/FontAwesome.tar.xz"
-tar -xf "$HOME/.local/share/fonts/FontAwesome.tar.xz" -C "$HOME/.local/share/fonts"
-rm -rf "$HOME/.local/share/fonts/FontAwesome.tar.xz"
+curl -L "$FONT_AWESOME_URL" -o "$HOME/.local/share/fonts/FontAwesome6-Free-Solid.otf"
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✔️ Font Awesome font installed${RESET}"
 else
@@ -778,9 +776,7 @@ else
 fi
 
 echo -e "${YELLOW}⏳ Installing Material Design Icons font...${RESET}"
-curl -L "$FONT_MATERIAL_DESIGN_URL" -o "$HOME/.local/share/fonts/MaterialDesignIcons.tar.xz"
-tar -xf "$HOME/.local/share/fonts/MaterialDesignIcons.tar.xz" -C "$HOME/.local/share/fonts"
-rm -rf "$HOME/.local/share/fonts/MaterialDesignIcons.tar.xz"
+curl -L "$FONT_MATERIAL_DESIGN_URL" -o "$HOME/.local/share/fonts/MaterialDesignIconsDesktop.ttf"
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✔️ Material Design Icons font installed${RESET}"
 else
