@@ -787,27 +787,27 @@ sleep 2
 clear
 
 ##### ----- Permissions BSPWM ----- ######
-# banner "🖥️ Permissions BSPWM..."
+banner "🖥️ Permissions BSPWM..."
 
-# if [[ -f "$HOME/.dotfiles/.config/bspwm" ]]; then
-#     cd "$HOME/.dotfiles/.config/bspwm"
-#     chmod +x bspwmrc
-#     chmod +x scripts/*
-#     cd $HOME
-#     if [ $? -eq 0 ]; then
-#         echo -e "${GREEN}✔️ Permissions BSPWM${RESET}"
-#     else
-#         echo -e "${RED}✖️ Permissions BSPWM${RESET}"
-#     fi
-#     sleep 1
-# else
-#     echo -e "${RED}✖️ .dotfiles/.config/bspwm/bspwmrc not found${RESET}"
-#     sleep 1
-#     exit 1
-# fi
+if [[ -f "$HOME/.dotfiles/.config/bspwm" ]]; then
+    cd "$HOME/.dotfiles/.config/bspwm"
+    chmod +x bspwmrc
+    chmod +x scripts/*
+    cd $HOME
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Permissions BSPWM${RESET}"
+    else
+        echo -e "${RED}✖️ Permissions BSPWM${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${RED}✖️ .dotfiles/.config/bspwm/bspwmrc not found${RESET}"
+    sleep 1
+    exit 1
+fi
 
-# sleep 2
-# clear
+sleep 2
+clear
 
 ###### ----- Thank you ----- ######
 banner "👋 Thank you for using my script!"
