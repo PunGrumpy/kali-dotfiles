@@ -789,7 +789,7 @@ clear
 ##### ----- Permissions BSPWM ----- ######
 banner "🖥️ Permissions BSPWM..."
 
-if [[ -f "$HOME/.dotfiles/.config/bspwm" ]]; then
+if [[ -d "$HOME/.dotfiles/.config/bspwm" ]]; then
     cd "$HOME/.dotfiles/.config/bspwm"
     chmod +x bspwmrc
     chmod +x scripts/*
