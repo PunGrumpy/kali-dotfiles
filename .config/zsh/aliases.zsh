@@ -28,12 +28,11 @@ alias g="git"
 alias gt="goto"
 alias grep='grep --color'
 
-if [ "$(command -v dockercolorize)" ]; then
-    alias dps="docker ps | dockercolorize"
-    alias di="docker images | dockercolorize"
-    alias dpsa="docker ps -a | dockercolorize"
-    alias dcps="docker compose ps | dockercolorize"
-fi
+alias dps="docker ps | dockercolorize"
+alias di="docker images | dockercolorize"
+alias dpsa="docker ps -a | dockercolorize"
+alias dcps="docker compose ps | dockercolorize"
+
 alias dlogs="docker logs --tail 100 --follow --timestamps --details"
 alias dwipe="docker system prune -a --volumes --force"
 alias dclean="docker system prune --force"
