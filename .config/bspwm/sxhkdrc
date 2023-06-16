@@ -6,25 +6,29 @@
 #      \ `\____\/\_\\ \_\\ \_\ \_\ \_\ \_\\ \____/
 #       \/_____/\/_/ \/_/ \/_/\/_/\/_/\/_/ \/___/ 
 
+#
+# Keybindings
+#
+
 # Show keybindings help
 alt + F1
-	KeybindingsHelp.sh
+	bash KeybindingsHelp.sh
 	
 # Open Terminal (alacritty)
 super + Return
-	OpenApps.sh --terminal
+	bash OpenApps.sh --terminal
 	
 # Open floating Terminal
 super + alt + Return
-	OpenApps.sh --floating
+	bash OpenApps.sh --floating
 
 # Menu aplicaciones
 super + space
-	OpenApps.sh --menu
+	bash OpenApps.sh --menu
 
 # Theme Selector
 alt + space
-	RiceSelector.sh
+	bash RiceSelector.sh
 
 # Power off, Reboot, Log out, Lockscreen, kill an app
 ctrl + super + alt + {p,r,q,l,k}
@@ -36,16 +40,16 @@ shift + alt + {b,g,n,p,r,t,w,m,v,k}
 	 geany, \
 	 thunar, \
 	 pavucontrol, \
-	 OpenApps.sh --ranger, \
+	 bash OpenApps.sh --ranger, \
 	 telegram-desktop, \
 	 whatsapp-nativefier --disable-gpu, \
 	 env LD_PRELOAD=/usr/lib/spotify-adblock.so spotify --disable-gpu --no-zygote %U, \
-	 OpenApps.sh --nvim, \
-	 OpenApps.sh --music}
+	 bash OpenApps.sh --nvim, \
+	 bash OpenApps.sh --music}
 
 # Hide/Show Bar (Polybar)
 super + {h,u}
-	HideBar.sh {-h,-u}
+	bash HideBar.sh {-h,-u}
 
 # Change transparency on focused window
 ctrl + alt {plus,minus,t}
@@ -53,15 +57,15 @@ ctrl + alt {plus,minus,t}
 
 # Screenshot Now
 Print
-	Screenshoter.sh --now
+	bash Screenshoter.sh --now
 
 # Screenshot Select
 ctrl + Print
-	Screenshoter.sh --sel
+	bash Screenshoter.sh --sel
 
 # Screenshot in 10s
 alt + Print
-	Screenshoter.sh --in10
+	bash Screenshoter.sh --in10
 
 # Reload sxhkd
 super + Escape
@@ -83,7 +87,9 @@ super + alt + r
 super + {_,shift + }q
 	bspc node -{c,k}
 
-####
+#
+# bspc commands
+#
 
 # rotate desktop
 super + r
@@ -193,12 +199,12 @@ alt + shift {Left,Down,Up,Right}
 
 # Manage brightness
 XF86MonBrightness{Up,Down}
-    sh Brightness.sh {up,down}
+    bash Brightness.sh {up,down}
 
 # Volume control
 XF86Audio{RaiseVolume,LowerVolume,Mute}
-	Volume.sh {--inc, --dec, --toggle}
+	bash Volume.sh {--inc, --dec, --toggle}
 
 # Music Control
 XF86Audio{Next,Prev,Play,Stop}
-	MediaControl.sh {--next,--previous,--toggle,--stop}
+	bash MediaControl.sh {--next,--previous,--toggle,--stop}
