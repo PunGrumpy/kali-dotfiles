@@ -48,7 +48,7 @@ format = "at [$path]($style)[$read_only]($read_only_style) "
 
 # Shows current git branch
 [git_branch]
-symbol = " "
+symbol = " "
 format = "via [$symbol$branch]($style) "
 # truncation_length = 4
 truncation_symbol = "…/"
@@ -72,7 +72,7 @@ deleted = " "
 
 # Shows kubernetes context and namespace
 [kubernetes]
-format = 'via [ﴱ $context\($namespace\)](bold purple) '
+format = 'via [🐳 $context\($namespace\)](bold purple) '
 disabled = false
 
 [kubernetes.context_aliases]
