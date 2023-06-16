@@ -186,8 +186,6 @@ else
     sleep 1
 fi
 
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
 sleep 2
 clear
 
@@ -399,95 +397,81 @@ fi
 sleep 2
 clear
 
-###### ----- Installing black box ----- ######
-banner "📦 Installing black box..."
+###### ----- Installing Application with Flatpak ----- ######
+banner "📦 Installing Application with Flatpak..."
 
-if ! command -v blackbox >/dev/null; then
-    flatpak install flathub com.raggesilver.BlackBox
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ black box installed${RESET}"
+flatpakIsInstalled() {
+    if flatpak list 2>/dev/null | grep -q "^$1\$"; then
+        return 0
     else
-        echo -e "${RED}✖️ black box not installed${RESET}"
+        return 1
     fi
-    sleep 1
-else
-    echo -e "${GREEN}✔️ black box already installed${RESET}"
-    sleep 1
-fi
+}
+
+flatpakRepoIsInstalled() {
+    if flatpak remotes 2>/dev/null | grep -q "^$1\$"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+flatpakRepoAdd() {
+    if ! flatpakRepoIsInstalled "$1"; then
+        echo -e "${YELLOW}⏳ Adding $1...${RESET}"
+        flatpak remote-add --if-not-exists "$1" "$2"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✔️ $1 added${RESET}"
+            sleep 1
+        else
+            echo -e "${RED}✖️ $1 not added${RESET}"
+            sleep 1
+        fi
+    else
+        echo -e "${GREEN}✔️ $1 already added${RESET}"
+    fi
+}
+
+flatpakInstall() {
+    if ! flatpakIsInstalled "$1"; then
+        echo -e "${YELLOW}⏳ Installing $1...${RESET}"
+        flatpak install "$1" -y
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✔️ $1 installed${RESET}"
+            sleep 1
+        else
+            echo -e "${RED}✖️ $1 not installed${RESET}"
+            sleep 1
+        fi
+    else
+        echo -e "${GREEN}✔️ $1 already installed${RESET}"
+    fi
+}
+
+flatpakRepoAdd flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpakInstall com.raggesilver.BlackBox
+flatpakInstall com.google.Chrome
+flatpakInstall com.discordapp.Discord
+flatpakInstall com.visualstudio.code
+flatpakInstall com.spotify.Client
 
 sleep 2
 clear
 
-###### ----- Installing google chrome ----- ######
-banner "📦 Installing google chrome..."
+###### ----- Installing commitizen ----- ######
+banner "📦 Installing commitizen..."
 
-if ! command -v flatpak run com.google.Chrome >/dev/null; then
-    flatpak install flathub com.google.Chrome
+if ! command -v cz >/dev/null; then
+    echo -e "${YELLOW}⏳ Installing commitizen...${RESET}"
+    sudo npm install -g cz-emoji
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ google chrome installed${RESET}"
+        echo -e "${GREEN}✔️ commitizen installed${RESET}"
     else
-        echo -e "${RED}✖️ google chrome not installed${RESET}"
+        echo -e "${RED}✖️ commitizen not installed${RESET}"
     fi
     sleep 1
 else
-    echo -e "${GREEN}✔️ google chrome already installed${RESET}"
-    sleep 1
-fi
-
-sleep 2
-clear
-
-###### ----- Installing spotify ----- ######
-banner "📦 Installing spotify..."
-
-if ! command -v flatpak run com.spotify.Client >/dev/null; then
-    flatpak install flathub com.spotify.Client
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ spotify installed${RESET}"
-    else
-        echo -e "${RED}✖️ spotify not installed${RESET}"
-    fi
-    sleep 1
-else
-    echo -e "${GREEN}✔️ spotify already installed${RESET}"
-    sleep 1
-fi
-
-sleep 2
-clear
-
-###### ----- Installing discord ----- ######
-banner "📦 Installing discord..."
-
-if ! command -v flatpak run com.discordapp.Discord >/dev/null; then
-    flatpak install flathub com.discordapp.Discord
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ discord installed${RESET}"
-    else
-        echo -e "${RED}✖️ discord not installed${RESET}"
-    fi
-    sleep 1
-else
-    echo -e "${GREEN}✔️ discord already installed${RESET}"
-    sleep 1
-fi
-
-sleep 2
-clear
-
-###### ----- Installing vscode ----- ######
-banner "📦 Installing vscode..."
-
-if ! command -v flatpak run com.visualstudio.code >/dev/null; then
-    flatpak install flathub com.visualstudio.code
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ vscode installed${RESET}"
-    else
-        echo -e "${RED}✖️ vscode not installed${RESET}"
-    fi
-    sleep 1
-else
-    echo -e "${GREEN}✔️ vscode already installed${RESET}"
+    echo -e "${GREEN}✔️ commitizen already installed${RESET}"
     sleep 1
 fi
 
@@ -610,7 +594,7 @@ banner "🔗 Linking files..."
 read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
     case $yn in
         [Yy]* ) if [[ -d "$HOME/.dotfiles" ]]; then
-                    for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig; do
+                    for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig $DOTFILE_DIR/.czrc; do
                         linking "$file" "$HOME"
                         sleep 1
                     done
