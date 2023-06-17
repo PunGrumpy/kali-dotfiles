@@ -554,6 +554,30 @@ fi
 sleep 2
 clear
 
+###### ----- Setting up Docker ----- ######
+banner "🐋 Setting up Docker..."
+
+if ! systemctl status docker >/dev/null; then
+    echo -e "${YELLOW}⏳ Installing Docker...${RESET}"
+    sudo groupadd docker
+    sudo usermod -aG docker "$USER"
+    newgrp docker
+    sudo systemctl enable docker
+    sudo systemctl start docker
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Docker running${RESET}"
+    else
+        echo -e "${RED}✖️ Docker not running${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ Docker already running${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
 ###### ----- Setting up SSH for GitHub ----- ######
 banner "🔑 Setting up SSH for GitHub..."
 
@@ -616,6 +640,11 @@ else
 fi
 
 cp -R "$HOME/.config" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .config copied${RESET}" || echo -e "${RED}✖️ .config not copied${RESET}"
+cp -R "$HOME/.zshrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .zshrc copied${RESET}" || echo -e "${RED}✖️ .zshrc not copied${RESET}"
+cp -R "$HOME/.czrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .czrc copied${RESET}" || echo -e "${RED}✖️ .czrc not copied${RESET}"
+cp -R "$HOME/.gitconfig" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitconfig copied${RESET}" || echo -e "${RED}✖️ .gitconfig not copied${RESET}"
+cp -R "$HOME/.gitignore" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitignore copied${RESET}" || echo -e "${RED}✖️ .gitignore not copied${RESET}"
+cp -R "$HOME/.docker" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .docker copied${RESET}" || echo -e "${RED}✖️ .docker not copied${RESET}"
 
 sleep 2
 clear
@@ -623,14 +652,23 @@ clear
 ###### ----- Remove old files ----- ######
 banner "🗑️ Removing old files..."
 
-if [[ -d "$HOME/.config" ]]; then
-    echo -e "${YELLOW}⏳ Removing old .config...${RESET}"
-    sudo rm -rf "$HOME/.config" && echo -e "${GREEN}✔️ .config removed${RESET}" || echo -e "${RED}✖️ .config not removed${RESET}"
+removing() {
+    local file="${1:?}"
+
+    if [[ -d "$file" ]]; then
+        echo -e "${YELLOW}⏳ Removing old $file...${RESET}"
+        sudo rm -rf "$file" && echo -e "${GREEN}✔️ $file removed${RESET}" || echo -e "${RED}✖️ $file not removed${RESET}"
+        sleep 1
+    else
+        echo -e "${GREEN}✔️ $file already removed${RESET}"
+        sleep 1
+    fi
+}
+
+for file in $HOME/.config $HOME/.zshrc $HOME/.czrc $HOME/.gitconfig $HOME/.gitignore $HOME/.docker; do
+    removing "$file"
     sleep 1
-else
-    echo -e "${GREEN}✔️ .config already removed${RESET}"
-    sleep 1
-fi
+done
 
 sleep 2
 clear
