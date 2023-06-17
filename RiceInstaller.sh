@@ -250,7 +250,7 @@ sleep 2
 clear
 
 ###### ----- Installing dependencies ----- ######
-dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq \
+dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq docker.io \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
 bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl papirus-icon-theme \
