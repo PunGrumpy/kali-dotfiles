@@ -6,11 +6,14 @@
 
 ## `📖` About
 
+I use Kali Purple Linux with two sessions: XFCE and BSPWM. I primarily use BSPWM for my daily activities and XFCE specifically for pentesting. I utilize the same set of dotfiles for both sessions to maintain consistency and streamline my workflow.
+
 This repository contains my personal dotfiles for Kali Linux. It contains my configuration for the following tools:
 
 | Tool                                                                            | Description                                                                              |
 | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | [bspwm](https://github.com/baskerville/bspwm)                                   | A tiling window manager based on binary space partitioning.                              |
+| [xfce](https://www.xfce.org/)                                                   | A lightweight desktop environment for UNIX-like operating systems.                       |
 | [Zsh](https://www.zsh.org/)                                                     | A shell designed for interactive use, although it is also a powerful scripting language. |
 | [Alacritty](https://alacritty.org/)                                             | A cross-platform, GPU-accelerated terminal emulator.                                     |
 | [Neovim](https://neovim.io/)                                                    | A hyperextensible Vim-based text editor.                                                 |
@@ -22,6 +25,8 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 | [Rofi](https://github.com/davatorium/rofi)                                      | A window switcher, application launcher and dmenu replacement.                           |
 
 ## `📦` Installation
+
+> **Warning**: Don't AFK while installing this dotfiles. You might miss some important prompts. I recommend you to read the script first before running it. You can also install the dotfiles manually by copying the files to their respective directories. I recommend you to use the script instead. It's easier and faster.
 
 ### `📥` Prerequisites
 
@@ -41,7 +46,7 @@ chmod +x $HOME/.RiceInstaller.sh
 $HOME/.RiceInstaller.sh
 ```
 
-## `🚀` Features
+## `🚀` Features (For BSPWM)
 
 - [x] **Wallpaper changer**: `super + alt + w` to change wallpaper.
 - [x] **Random wallpaper**: `super + alt + r` to change wallpaper randomly.

@@ -17,8 +17,14 @@ BEEP=$(tput blink)
 RESET=$(tput sgr0)
 
 DOTFILE_URL="https://github.com/PunGrumpy/kali-dotfiles.git"
+DOTFILE_SSH_URL="git@github.com:PunGrumpy/kali-dotfiles.git"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts.git"
 BSPC_URL="https://github.com/bnoordhuis/bspc.git"
+
+ORCHIS_THEME_URL="https://github.com/vinceliuice/Orchis-theme.git"
+ORCHIS_THEME_SSH_URL="git@github.com:vinceliuice/Orchis-theme.git"
+FIREFOX_THEME_URL="https://github.com/vinceliuice/WhiteSur-firefox-theme.git"
+FIREFOX_THEME_SSH_URL="git@github.com:vinceliuice/WhiteSur-firefox-theme.git"
 
 FONT_HACK_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz"
 FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.tar.xz"
@@ -482,12 +488,58 @@ flatpakRun com.spotify.Client
 sleep 2
 clear
 
+###### ----- Installing XFCE4 Orchis Theme ----- ######
+banner "🖼️ Installing XFCE4 Orchis Theme..."
+
+read -rp "⚠️ Do you want to install XFCE4 Orchis Theme? [Y/n] " yn
+    case $yn in
+        [Yy]* ) git clone $ORCHIS_THEME_SSH_URL $HOME/.orchis-theme || git clone $ORCHIS_THEME_URL $HOME/.orchis-theme
+                cd $HOME/.orchis-theme
+                ./install --tweaks --tweaks macos --round --shell
+                sleep 3
+                cd $HOME
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ XFCE4 Orchis Theme installed${RESET}"
+                else
+                    echo -e "${RED}✖️ XFCE4 Orchis Theme not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
+sleep 2
+clear
+
+###### ----- Installing Firefox theme ----- ######
+banner "🖼️ Installing Firefox theme..."
+
+read -rp "⚠️ Do you want to install Firefox theme? [Y/n] " yn
+    case $yn in
+        [Yy]* ) git clone $FIREFOX_THEME_SSH_URL $HOME/.firefox-theme || git clone $FIREFOX_THEME_URL $HOME/.firefox-theme
+                cd $HOME/.firefox-theme
+                ./install.sh
+                sleep 3
+                cd $HOME
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Firefox theme installed${RESET}"
+                else
+                    echo -e "${RED}✖️ Firefox theme not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
+sleep 2
+clear
+
 ###### ----- Installing commitizen ----- ######
 banner "📦 Installing commitizen..."
 
 if ! command -v cz >/dev/null; then
     echo -e "${YELLOW}⏳ Installing commitizen...${RESET}"
-    sudo npm install -g cz-emoji commitizen
+    npm install -g cz-emoji commitizen
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ commitizen installed${RESET}"
     else
@@ -496,6 +548,56 @@ if ! command -v cz >/dev/null; then
     sleep 1
 else
     echo -e "${GREEN}✔️ commitizen already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
+###### ----- Setting up SSH for GitHub ----- ######
+banner "🔑 Setting up SSH for GitHub..."
+
+if [[ -d "$HOME/.ssh" ]]; then
+    echo -e "${GREEN}✔️ .ssh folder already created${RESET}"
+    sleep 1
+else
+    echo -e "${YELLOW}⏳ Creating .ssh folder...${RESET}"
+    mkdir -p "$HOME/.ssh"
+    echo -e "${GREEN}✔️ .ssh folder created${RESET}"
+    sleep 1
+fi
+
+if [[ -f "$HOME/.ssh/ed_25519_github" ]]; then
+    echo -e "${GREEN}✔️ SSH key already created${RESET}"
+    sleep 1
+else
+    echo -e "${YELLOW}⏳ Creating SSH key...${RESET}"
+    read -rp "✒️ Enter your email: " email
+    ssh-keygen -t ed25519 -C "$email"
+    echo -e "${GREEN}✔️ SSH key created${RESET}"
+    sleep 1
+fi
+
+if [[ -f "$HOME/.ssh/config" ]]; then
+    echo -e "${GREEN}✔️ SSH config already created${RESET}"
+    sleep 1
+else
+    echo -e "${YELLOW}⏳ Creating SSH config...${RESET}"
+    touch "$HOME/.ssh/config"
+    echo -e "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/ed_25519_github\n\tAddKeysToAgent yes" >> "$HOME/.ssh/config"
+    echo -e "${GREEN}✔️ SSH config created${RESET}"
+    sleep 1
+fi
+
+if [[ -f "$HOME/.ssh/ed_25519_github.pub" ]]; then
+    echo -e "${GREEN}✔️ SSH public key already created${RESET}"
+    sleep 1
+else
+    echo -e "${YELLOW}⏳ Creating SSH public key...${RESET}"
+    cat "$HOME/.ssh/ed_25519_github.pub" | xclip -selection clipboard
+    echo -e "${YELLOW}⚠️ SSH public key copied to clipboard (Don't forget to add it to your GitHub account)${RESET}"
+    sleep 1
+    echo -e "${GREEN}✔️ SSH public key created${RESET}"
     sleep 1
 fi
 
@@ -553,8 +655,14 @@ fi
 
 if [[ "$is_exist" -eq 1 ]]; then
     echo -e "${YELLOW}⏳ Cloning dotfiles...${RESET}"
-    git clone "$DOTFILE_URL" "$HOME/.dotfiles"
-    echo -e "${GREEN}✔️ Dotfiles cloned${RESET}"
+    git clone "$DOTFILE_SSH_URL" "$HOME/.dotfiles" || git clone "$DOTFILE_URL" "$HOME/.dotfiles"
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Dotfiles cloned${RESET}"
+        sleep 1
+    else
+        echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
+        sleep 1
+    fi
 fi
 
 sleep 2
@@ -607,6 +715,7 @@ linking() {
             sleep 1
         else
             echo -e "${RED}✖️ $file not linked${RESET}"
+            echo -e "${YELLOW}⚠️ if error 'File exists' please delete the existing $file${RESET}"
             sleep 1
         fi
         sleep 1
@@ -633,56 +742,11 @@ read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
 sleep 2
 clear
 
-###### ----- Installing Copying files ----- ######
+###### ----- Copying files ----- ######
 banner "📂 Copying files..."
 
-copying() {
-    local file="${1:?}"
-    local dest="${2:?}"
-
-    if [[ -f "$dest" ]]; then
-        echo -e "${GREEN}✔️ $file already copied${RESET}"
-        read -rp "⚠️ Do you want to delete the existing $file? [Y/n] " yn
-        case $yn in
-            [Yy]* ) rm -rf "$dest" ;;
-            [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n" ;;
-            * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n" ;;
-        esac
-    else
-        echo -e "${YELLOW}⏳ Copying $file...${RESET}"
-        if [[ -d "$dest" ]]; then
-            echo -e "${GREEN}✔️ $dest already created${RESET}"
-        else
-            echo -e "${YELLOW}⏳ Creating $dest...${RESET}"
-            mkdir -p "$dest"
-            echo -e "${GREEN}✔️ $dest created${RESET}"
-        fi
-        sudo cp -r "$file" "$dest"
-        if [ $? -eq 0 ]; then
-            echo -e "${GREEN}✔️ $file copied${RESET}"
-            sleep 1
-        else
-            echo -e "${RED}✖️ $file not copied${RESET}"
-            sleep 1
-        fi
-        sleep 1
-    fi
-}
-
-read -rp "⚠️ Do you want to copy your dotfiles? [Y/n] " yn
-    case $yn in
-        [Yy]* ) if [[ -d "$HOME/.dotfiles" ]]; then
-                    for $file in $DOTFILE_DIR/.config/blackbox; do
-                        copying "$file" "$HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes"
-                        sleep 1
-                    done
-                else
-                    echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
-                    exit 1
-                fi;;
-        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
-        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
-    esac
+echo "Don't forget copy file from $HOME/.dotfiles/.config/blackbox/xcad.json to Blackbox config (if you use flatpak $HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/xcad.json)"
+sleep 2
 
 sleep 2
 clear
