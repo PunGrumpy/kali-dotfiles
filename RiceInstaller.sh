@@ -554,6 +554,27 @@ fi
 sleep 2
 clear
 
+###### ----- Installing Spicetify ----- ######
+banner "🎶 Installing Spicetify..."
+
+if ! command -v spicetify >/dev/null; then
+    echo -e "${YELLOW}⏳ Installing Spicetify...${RESET}"
+    curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.sh | sh
+    curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.sh | sh
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Spicetify installed${RESET}"
+    else
+        echo -e "${RED}✖️ Spicetify not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ Spicetify already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
 ###### ----- Setting up Docker ----- ######
 banner "🐋 Setting up Docker..."
 
