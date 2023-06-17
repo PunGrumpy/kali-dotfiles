@@ -24,6 +24,8 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 | [Picom](https://github.com/yshui/picom)                                         | A lightweight compositor for X11.                                                        |
 | [Rofi](https://github.com/davatorium/rofi)                                      | A window switcher, application launcher and dmenu replacement.                           |
 
+> **Note**: I have wallpaper on **.github/wallpaper** and **.config/bspwm/rices/xcad/wallpaper** directory. You can use it if you want. (In further update, I will add more wallpaper)
+
 ## `📦` Installation
 
 > **Warning**: Don't AFK while installing this dotfiles. You might miss some important prompts. I recommend you to read the script first before running it. You can also install the dotfiles manually by copying the files to their respective directories. I recommend you to use the script instead. It's easier and faster.
