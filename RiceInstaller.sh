@@ -448,12 +448,36 @@ flatpakInstall() {
     fi
 }
 
+flatpakRun() {
+    if flatpakIsInstalled "$1"; then
+        echo -e "${YELLOW}⏳ Running $1...${RESET}"
+        flatpak run "$1"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✔️ $1 running${RESET}"
+            sleep 1
+        else
+            echo -e "${RED}✖️ $1 not running${RESET}"
+            sleep 1
+        fi
+    else
+        echo -e "${RED}✖️ $1 not installed${RESET}"
+    fi
+}
+
 flatpakRepoAdd flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpakInstall com.raggesilver.BlackBox
 flatpakInstall com.google.Chrome
 flatpakInstall com.discordapp.Discord
 flatpakInstall com.visualstudio.code
 flatpakInstall com.spotify.Client
+
+sleep 2
+
+flatpakRun com.raggesilver.BlackBox
+flatpakRun com.google.Chrome
+flatpakRun com.discordapp.Discord
+flatpakRun com.visualstudio.code
+flatpakRun com.spotify.Client
 
 sleep 2
 clear
@@ -626,6 +650,13 @@ copying() {
         esac
     else
         echo -e "${YELLOW}⏳ Copying $file...${RESET}"
+        if [[ -d "$dest" ]]; then
+            echo -e "${GREEN}✔️ $dest already created${RESET}"
+        else
+            echo -e "${YELLOW}⏳ Creating $dest...${RESET}"
+            mkdir -p "$dest"
+            echo -e "${GREEN}✔️ $dest created${RESET}"
+        fi
         sudo cp -r "$file" "$dest"
         if [ $? -eq 0 ]; then
             echo -e "${GREEN}✔️ $file copied${RESET}"
