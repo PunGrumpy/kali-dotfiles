@@ -23,6 +23,8 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 | [Polybar](https://polybar.github.io/)                                           | A fast and easy-to-use tool for creating status bars.                                    |
 | [Picom](https://github.com/yshui/picom)                                         | A lightweight compositor for X11.                                                        |
 | [Rofi](https://github.com/davatorium/rofi)                                      | A window switcher, application launcher and dmenu replacement.                           |
+| [Homebrew](https://brew.sh/)                                                    | A package manager for macOS.                                                             |
+| [DockerColorize](https://github.com/PunGrumpy/dockercolorize)                   | A tool to colorize docker output.                                                        |
 
 > **Note**: I have wallpaper on **[.github/wallpaper](./.github/wallpaper/)** and **[.config/bspwm/rices/xcad/wallpaper](./.config/bspwm/rices/xcad/wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
 
