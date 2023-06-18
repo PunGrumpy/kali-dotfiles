@@ -78,32 +78,6 @@ disabled = false
 [kubernetes.context_aliases]
 "docker-desktop" = "docker"
 
-# AWS profile
-[aws]
-format = 'on [$symbol$profile]($style) '
-symbol = " "
-style = "bold yellow"
-
-[aws.region_aliases]
-"us-east-1" = "ue1"
-"us-west-2" = "uw2"
-"eu-west-1" = "ew1"
-"eu-central-1" = "ec1"
-"ap-southeast-1" = "as1"
-"ap-southeast-2" = "as2"
-"ap-northeast-1" = "an1"
-"sa-east-1" = "se1"
-
-[aws.profile_aliases]
-"personal" = "p"
-"work" = "w"
-
-# GCP profile
-[gcloud]
-format = 'on [$symbol$account]($style) '
-symbol = " "
-style = "bold yellow"
-
 # ---
 
 # Disable some modules that aren't needed anymore
@@ -129,4 +103,7 @@ disabled = true
 disabled = true
 
 [terraform]
+disabled = true
+
+[gcloud]
 disabled = true
