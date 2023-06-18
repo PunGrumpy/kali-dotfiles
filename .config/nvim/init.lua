@@ -6,10 +6,19 @@
 --     \ \_\ \_\ \____/\ \_____\ `\___/ /\_____\\ \_\\ \_\
 --      \/_/\/_/\/___/  \/_____/`\/__/  \/_____/ \/_/ \/_/
 
-require("pungrumpy.plugins-setup")
-require("pungrumpy.core.options")
-require("pungrumpy.core.keymaps")
-require("pungrumpy.core.colorscheme")
-require("pungrumpy.plugins.nvim-tree")
-require("pungrumpy.plugins.lualine")
-require("pungrumpy.plugins.colorizer")
+require('kali-pungrumpy.base')
+require('kali-pungrumpy.highlights')
+require('kali-pungrumpy.maps')
+require('kali-pungrumpy.plugins')
+
+local has = vim.fn.has
+local is_mac = has "macunix"
+local is_win = has "win32"
+local is_linux = has "unix" and not is_mac
+
+if is_mac or is_linux then
+  require('kali-pungrumpy.macos')
+end
+if is_win then
+  require('kali-pungrumpy.windows')
+end
