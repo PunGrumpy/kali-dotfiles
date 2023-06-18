@@ -7,11 +7,11 @@
 time=$(date +%Y-%m-%d-%I-%M-%S)
 geometry=`xrandr | head -n1 | cut -d',' -f2 | tr -d '[:blank:],current'`
 dir="$(xdg-user-dir PICTURES)/ScreenShots"
-file="ShoT_${time}_${geometry}.png"
+file="ScreenShot_${time}_${geometry}.png"
 
-	if ! [ -d "$dir" ]; then
-		mkdir -p $dir
-	fi
+if ! [ -d "$dir" ]; then
+	mkdir -p $dir
+fi
 
 function notify_view() {
 	if [[ -e "$dir/$file" ]]; then
@@ -38,7 +38,6 @@ function countdown() {
 }
 
 function ShotNow() {
-	
 	cd "$dir" || return
 	local bytes
 	bytes="$(maim -u -o -f png | base64)"
@@ -46,7 +45,6 @@ function ShotNow() {
 }
 
 function ShotSelect() {
-	
 	cd "$dir" || return
 	local bytes
 	bytes="$(maim -u -o -f png -s -b 2 -c 0.35,0.55,0.85,0.25 -l | base64)"
