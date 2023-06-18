@@ -20,6 +20,7 @@ DOTFILE_URL="https://github.com/PunGrumpy/kali-dotfiles.git"
 DOTFILE_SSH_URL="git@github.com:PunGrumpy/kali-dotfiles.git"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts.git"
 BSPC_URL="https://github.com/bnoordhuis/bspc.git"
+PACKER_URL="https://github.com/wbthomason/packer.nvim.git"
 
 ORCHIS_THEME_URL="https://github.com/vinceliuice/Orchis-theme.git"
 ORCHIS_THEME_SSH_URL="git@github.com:vinceliuice/Orchis-theme.git"
@@ -259,9 +260,9 @@ libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keys
 cmake-data python3-sphinx libcairo2-dev libxcb1-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev \
 libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libuv1-dev libnl-genl-3-dev)
 dependencies_apt_repo=(ppa:papirus/papirus)
-dependencies_tap_brew=(pungrumpy/formulas)
+dependencies_tap_brew=(pungrumpy/formulas spicetify/homebrew-tap)
 dependencies_brew=(git gcc \
-tmux neovim starship antibody docker \
+tmux neovim starship antibody docker spiceify-cli \
 peco exa dockercolorize \
 python3 pyenv go node pnpm \
 fzf fd bat hub)
@@ -557,9 +558,8 @@ clear
 ###### ----- Installing Spicetify ----- ######
 banner "🎶 Installing Spicetify..."
 
-if ! command -v spicetify >/dev/null; then
+if -d $HOME/.config/spicetify; then
     echo -e "${YELLOW}⏳ Installing Spicetify...${RESET}"
-    curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.sh | sh
     curl -fsSL https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.sh | sh
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ Spicetify installed${RESET}"
@@ -569,6 +569,26 @@ if ! command -v spicetify >/dev/null; then
     sleep 1
 else
     echo -e "${GREEN}✔️ Spicetify already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
+###### ----- Installing Packer ----- ######
+banner "📦 Installing Packer..."
+
+if ! -d "$HOME/.local/share/nvim/site/pack/packer"; then
+    echo -e "${YELLOW}⏳ Installing Packer...${RESET}"
+    git clone "$PACKER_URL" "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Packer installed${RESET}"
+    else
+        echo -e "${RED}✖️ Packer not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ Packer already installed${RESET}"
     sleep 1
 fi
 
