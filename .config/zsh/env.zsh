@@ -33,3 +33,6 @@ export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
 
 # TERRAFORM
 [[ -d ~/.terraform ]] && export PATH="$HOME/.terraform/bin:$PATH"
+
+# SPICETIFY
+[[ -d ~/.config/spicetify ]] && export PATH="$HOME/.spicetify:$PATH"
