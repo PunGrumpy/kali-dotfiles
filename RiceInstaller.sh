@@ -987,6 +987,14 @@ else
     echo -e "${RED}✖️ Material Design Icons font not installed${RESET}"
 fi
 
+echo -e "${YELLOW}⏳ Installing Hack NF Compatible font...${RESET}"
+cp -r "$HOME/.dotfiles/fonts/HackNFCompatiple/*" "$HOME/.local/share/fonts"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✔️ Hack NF Compatible font installed${RESET}"
+else
+    echo -e "${RED}✖️ Hack NF Compatible font not installed${RESET}"
+fi
+
 sleep 2
 clear
 
