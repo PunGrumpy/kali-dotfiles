@@ -4,6 +4,16 @@
   <img src="./.github/asset/banner.gif" height="300" alt="OS: Kali Linux">
 </div>
 
+## `📸` Screenshots
+
+### `XFCE`
+
+![XFCE](./.github/asset/xfce.png)
+
+### `BSPWM`
+
+![BSPWM](./.github/asset/bspwm.png)
+
 ## `📖` About
 
 I use Kali Purple Linux with two sessions: **XFCE** and **BSPWM**. I primarily use BSPWM for my daily activities and XFCE specifically for pentesting. I utilize the same set of dotfiles for both sessions to maintain consistency and streamline my workflow.
