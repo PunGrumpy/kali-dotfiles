@@ -36,7 +36,7 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 | [Homebrew](https://brew.sh/)                                                    | A package manager for macOS.                                                             |
 | [Spicetify](https://spicetify.app/)                                             | A command-line tool to customize Spotify client.                                         |
 
-> **Note**: I have wallpaper on **[.github/wallpaper](./.github/wallpaper/)** and **[.config/bspwm/rices/xcad/wallpaper](./.config/bspwm/rices/xcad/wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
+> **Note**: I have wallpaper on **[.github/wallpaper](./.github/wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
 
 ## `📦` Installation
 
