@@ -690,30 +690,6 @@ cp -R "$HOME/.docker" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ 
 sleep 2
 clear
 
-###### ----- Remove old files ----- ######
-banner "🗑️ Removing old files..."
-
-removing() {
-    local file="${1:?}"
-
-    if [[ -d "$file" ]]; then
-        echo -e "${YELLOW}⏳ Removing old $file...${RESET}"
-        sudo rm -rf "$file" && echo -e "${GREEN}✔️ $file removed${RESET}" || echo -e "${RED}✖️ $file not removed${RESET}"
-        sleep 1
-    else
-        echo -e "${GREEN}✔️ $file already removed${RESET}"
-        sleep 1
-    fi
-}
-
-for file in $HOME/.config $HOME/.zshrc $HOME/.czrc $HOME/.gitconfig $HOME/.gitignore $HOME/.docker; do
-    removing "$file"
-    sleep 1
-done
-
-sleep 2
-clear
-
 ###### ----- Clone dotfiles ----- ######
 banner "📂 Cloning dotfiles..."
 
@@ -769,6 +745,30 @@ else
 fi
 
 printf '\n%s%sYour GIT config has been updated.%s\n\n' "${BOLD}" "${GREEN}" "${RESET}"
+
+sleep 2
+clear
+
+###### ----- Remove old files ----- ######
+banner "🗑️ Removing old files..."
+
+removing() {
+    local file="${1:?}"
+
+    if [[ -d "$file" ]]; then
+        echo -e "${YELLOW}⏳ Removing old $file...${RESET}"
+        sudo rm -rf "$file" && echo -e "${GREEN}✔️ $file removed${RESET}" || echo -e "${RED}✖️ $file not removed${RESET}"
+        sleep 1
+    else
+        echo -e "${GREEN}✔️ $file already removed${RESET}"
+        sleep 1
+    fi
+}
+
+for file in $HOME/.config $HOME/.zshrc $HOME/.czrc $HOME/.gitconfig $HOME/.gitignore $HOME/.docker; do
+    removing "$file"
+    sleep 1
+done
 
 sleep 2
 clear
