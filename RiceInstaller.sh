@@ -29,6 +29,7 @@ FIREFOX_THEME_URL="https://github.com/vinceliuice/WhiteSur-firefox-theme.git"
 FIREFOX_THEME_SSH_URL="git@github.com:vinceliuice/WhiteSur-firefox-theme.git"
 WHITESUR_ICONS_THEME_URL="https://github.com/vinceliuice/WhiteSur-icon-theme.git"
 WHITESUR_ICONS_THEME_SSH_URL="git@github.com:vinceliuice/WhiteSur-icon-theme.git"
+MACOS_MOUSE_URL="https://github.com/ful1e5/apple_cursor/releases/download/v2.0.0/macOS-Monterey.tar.gz"
 
 FONT_HACK_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz"
 FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.tar.xz"
@@ -609,6 +610,25 @@ read -rp "⚠️ Do you want to install WhiteSur Icon Theme? [Y/n] " yn
 
 sleep 2
 clear
+
+###### ----- Installing macOS Mouse Cursor ----- ######
+banner "🖼️ Installing macOS Mouse Cursor..."
+
+read -rp "⚠️ Do you want to install macOS Mouse Cursor? [Y/n] " yn
+    case $yn in
+        [Yy]* ) wget $MACOS_MOUSE_URL -O $HOME/Downloads/macos-mouse.tar.gz
+                tar -xvf $HOME/Downloads/macos-mouse.tar.gz
+                sudo mv $HOME/Downloads/macos-mouse /usr/share/icons
+                rm -rf $HOME/.macos-mouse.tar.gz
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ macOS Mouse Cursor installed${RESET}"
+                else
+                    echo -e "${RED}✖️ macOS Mouse Cursor not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
 
 ###### ----- Installing commitizen ----- ######
 banner "📦 Installing commitizen..."
