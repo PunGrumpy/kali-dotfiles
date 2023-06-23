@@ -21,6 +21,7 @@ DOTFILE_SSH_URL="git@github.com:PunGrumpy/kali-dotfiles.git"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts.git"
 BSPC_URL="https://github.com/bnoordhuis/bspc.git"
 PACKER_URL="https://github.com/wbthomason/packer.nvim.git"
+ANTIBODY_URL="git.io/antibody"
 
 ORCHIS_THEME_URL="https://github.com/vinceliuice/Orchis-theme.git"
 ORCHIS_THEME_SSH_URL="git@github.com:vinceliuice/Orchis-theme.git"
@@ -494,7 +495,14 @@ banner "📦 Installing Antibody..."
 
 if ! command -v antibody >/dev/null; then
     echo -e "${YELLOW}⏳ Installing Antibody...${RESET}"
-    curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
+    if [ ! -f "/usr/local/bin/antibody" ]; then
+        sudo mkdir -p /usr/local/bin/antibody
+        sudo chown -R $(whoami) /usr/local/bin/antibody
+        curl -sfL $ANTIBODY_URL | sh -s - -b /usr/local/bin/antibody
+    else
+        sudo chown -R $(whoami) /usr/local/bin/antibody
+        curl -sfL $ANTIBODY_URL | sh -s - -b /usr/local/bin/antibody
+    fi
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ Antibody installed${RESET}"
     else
