@@ -27,11 +27,15 @@ ORCHIS_THEME_URL="https://github.com/vinceliuice/Orchis-theme.git"
 ORCHIS_THEME_SSH_URL="git@github.com:vinceliuice/Orchis-theme.git"
 FIREFOX_THEME_URL="https://github.com/vinceliuice/WhiteSur-firefox-theme.git"
 FIREFOX_THEME_SSH_URL="git@github.com:vinceliuice/WhiteSur-firefox-theme.git"
+WHITESUR_ICONS_THEME_URL="https://github.com/vinceliuice/WhiteSur-icon-theme.git"
+WHITESUR_ICONS_THEME_SSH_URL="git@github.com:vinceliuice/WhiteSur-icon-theme.git"
 
 FONT_HACK_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz"
 FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.tar.xz"
 FONT_AWESOME_URL="https://github.com/PunGrumpy/gh0stzk-dotfiles/raw/master/misc/fonts/FontAwesome6-Free-Solid.otf"
 FONT_MATERIAL_DESIGN_URL="https://github.com/gh0stzk/dotfiles/raw/master/misc/fonts/MaterialDesignIconsDesktop.ttf"
+FONT_NOTOSANS_URL="https://fonts.google.com/download?family=Noto%20Sans"
+FONT_NOTOSANS_THAI_URL="https://fonts.google.com/download?family=Noto%20Sans%20Thai"
 
 DOTFILE_DIR="$HOME/.dotfiles"
 
@@ -524,7 +528,8 @@ read -rp "⚠️ Do you want to install XFCE4 Orchis Theme? [Y/n] " yn
     case $yn in
         [Yy]* ) git clone $ORCHIS_THEME_SSH_URL $HOME/.orchis-theme || git clone $ORCHIS_THEME_URL $HOME/.orchis-theme
                 cd $HOME/.orchis-theme
-                ./install --tweaks --tweaks macos --round --shell
+                chmod +x ./install.sh
+                ./install.sh --tweaks --tweaks macos --round 3
                 sleep 3
                 cd $HOME
                 if [ $? -eq 0 ]; then
@@ -562,6 +567,27 @@ read -rp "⚠️ Do you want to install Firefox theme? [Y/n] " yn
 
 sleep 2
 clear
+
+###### ----- Installing WhiteSur Icon Theme ----- ######
+banner "🖼️ Installing WhiteSur Icon Theme..."
+
+read -rp "⚠️ Do you want to install WhiteSur Icon Theme? [Y/n] " yn
+    case $yn in
+        [Yy]* ) git clone $WHITESUR_ICONS_THEME_SSH_URL $HOME/.whitesur-icons-theme || git clone $WHITESUR_ICONS_THEME_URL $HOME/.whitesur-icons-theme
+                cd $HOME/.whitesur-icons-theme
+                chmod +x ./install.sh
+                ./install.sh
+                sleep 3
+                cd $HOME
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ WhiteSur Icon Theme installed${RESET}"
+                else
+                    echo -e "${RED}✖️ WhiteSur Icon Theme not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
 
 ###### ----- Installing commitizen ----- ######
 banner "📦 Installing commitizen..."
@@ -861,7 +887,7 @@ read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy
                     echo -e "${GREEN}✔️ /usr/share/backgrounds/grumpy already created${RESET}"
                     sleep 1
                 fi
-                sudo cp "$HOME/.dotfiles/.github/wallpaper/*" /usr/share/backgrounds/grumpy
+                sudo cp -R $HOME/.dotfiles/.github/wallpaper/* /usr/share/backgrounds/grumpy
                 if [ $? -eq 0 ]; then
                     echo -e "${GREEN}✔️ Wallpaper copied${RESET}"
                 else
@@ -1032,11 +1058,31 @@ else
 fi
 
 echo -e "${YELLOW}⏳ Installing Hack NF Compatible font...${RESET}"
-cp -r "$HOME/.dotfiles/fonts/HackNFCompatiple/*" "$HOME/.local/share/fonts"
+sudo cp -r "$HOME/.dotfiles/fonts/HackNFCompatiple/*" "/usr/share/fonts"
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✔️ Hack NF Compatible font installed${RESET}"
 else
     echo -e "${RED}✖️ Hack NF Compatible font not installed${RESET}"
+fi
+
+echo -e "${YELLOW}⏳ Installing Noto sans font...${RESET}"
+sudo curl -L "$FONT_NOTO_SANS_URL" -o "/usr/share/fonts/noto-sans.zip"
+sudo unzip "/usr/share/fonts/noto-sans.zip" -d "/usr/share/fonts/noto-sans"
+sudo rm -rf "/usr/share/fonts/noto-sans.zip"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✔️ Noto sans font installed${RESET}"
+else
+    echo -e "${RED}✖️ Noto sans font not installed${RESET}"
+fi
+
+echo -e "${YELLOW}⏳ Installing Noto sans thai font...${RESET}"
+sudo curl -L "$FONT_NOTO_SANS_THAI_URL" -o "/usr/share/fonts/noto-sans-thai.zip"
+sudo unzip "/usr/share/fonts/noto-sans-thai.zip" -d "/usr/share/fonts/noto-sans-thai"
+sudo rm -rf "/usr/share/fonts/noto-sans-thai.zip"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✔️ Noto sans thai font installed${RESET}"
+else
+    echo -e "${RED}✖️ Noto sans thai font not installed${RESET}"
 fi
 
 sleep 2
