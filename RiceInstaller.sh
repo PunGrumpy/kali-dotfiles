@@ -555,7 +555,7 @@ read -rp "⚠️ Do you want to install XFCE4 Orchis Theme? [Y/n] " yn
                 else
                     echo -e "${RED}✖️ XFCE4 Orchis Theme not installed${RESET}"
                 fi
-                sleep 1;;
+                sleep 1
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
     esac
@@ -897,7 +897,7 @@ banner "📂 Copying files..."
 echo "Don't forget copy file from $HOME/.dotfiles/.config/blackbox/xcad.json to Blackbox config (if you use flatpak $HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/xcad.json)"
 sleep 3
 
-read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy? [Y/n]" yn
+read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy? [Y/n] " yn
     case $yn in
         [Yy]* ) if ! [[ -d "/usr/share/backgrounds/grumpy" ]]; then
                     echo -e "${YELLOW}⏳ Creating /usr/share/backgrounds/grumpy...${RESET}"
@@ -913,6 +913,48 @@ read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy
                     echo -e "${GREEN}✔️ Wallpaper copied${RESET}"
                 else
                     echo -e "${RED}✖️ Wallpaper not copied${RESET}"
+                fi;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
+read -rp "🖼️ Do you want to copy themes to /usr/share/themes? [Y/n] " yn
+    case $yn in
+        [Yy]* ) if ! [[ -d "/usr/share/themes/Orchis" ]]; then
+                    echo -e "${YELLOW}⏳ Creating /usr/share/themes/Orchis...${RESET}"
+                    sudo mkdir -p "/usr/share/themes/Orchis"
+                    echo -e "${GREEN}✔️ /usr/share/themes/Orchis created${RESET}"
+                    sleep 1
+                else
+                    echo -e "${GREEN}✔️ /usr/share/themes/Orchis already created${RESET}"
+                    sleep 1
+                fi
+                sudo cp -R $HOME/.themes/* /usr/share/themes/Orchis
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Themes copied${RESET}"
+                else
+                    echo -e "${RED}✖️ Themes not copied${RESET}"
+                fi;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
+read -rp "🖼️ Do you want to copy icons to /usr/share/icons? [Y/n] " yn
+    case $yn in
+        [Yy]* ) if ! [[ -d "/usr/share/icons/WhiteSur" ]]; then
+                    echo -e "${YELLOW}⏳ Creating /usr/share/icons/WhiteSur...${RESET}"
+                    sudo mkdir -p "/usr/share/icons/WhiteSur"
+                    echo -e "${GREEN}✔️ /usr/share/icons/WhiteSur created${RESET}"
+                    sleep 1
+                else
+                    echo -e "${GREEN}✔️ /usr/share/icons/WhiteSur already created${RESET}"
+                    sleep 1
+                fi
+                sudo cp -R $HOME/.icons/* /usr/share/icons/WhiteSur
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Icons copied${RESET}"
+                else
+                    echo -e "${RED}✖️ Icons not copied${RESET}"
                 fi;;
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
@@ -1079,7 +1121,10 @@ else
 fi
 
 echo -e "${YELLOW}⏳ Installing Hack NF Compatible font...${RESET}"
-sudo cp -r "$HOME/.dotfiles/fonts/HackNFCompatiple/*" "/usr/share/fonts"
+if [ ! -d "/usr/share/fonts/HackNFCompatiple" ]; then
+    sudo mkdir -p "/usr/share/fonts/HackNFCompatiple"
+fi
+sudo cp -r "$HOME/.dotfiles/fonts/HackNFCompatiple/*" "/usr/share/fonts/HackNFCompatiple"
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✔️ Hack NF Compatible font installed${RESET}"
 else
@@ -1087,6 +1132,9 @@ else
 fi
 
 echo -e "${YELLOW}⏳ Installing Noto sans font...${RESET}"
+if [ ! -d "/usr/share/fonts/noto-sans" ]; then
+    sudo mkdir -p "/usr/share/fonts/noto-sans"
+fi
 sudo curl -L "$FONT_NOTO_SANS_URL" -o "/usr/share/fonts/noto-sans.zip"
 sudo unzip "/usr/share/fonts/noto-sans.zip" -d "/usr/share/fonts/noto-sans"
 sudo rm -rf "/usr/share/fonts/noto-sans.zip"
@@ -1097,6 +1145,9 @@ else
 fi
 
 echo -e "${YELLOW}⏳ Installing Noto sans thai font...${RESET}"
+if [ ! -d "/usr/share/fonts/noto-sans-thai" ]; then
+    sudo mkdir -p "/usr/share/fonts/noto-sans-thai"
+fi
 sudo curl -L "$FONT_NOTO_SANS_THAI_URL" -o "/usr/share/fonts/noto-sans-thai.zip"
 sudo unzip "/usr/share/fonts/noto-sans-thai.zip" -d "/usr/share/fonts/noto-sans-thai"
 sudo rm -rf "/usr/share/fonts/noto-sans-thai.zip"
