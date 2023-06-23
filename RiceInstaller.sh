@@ -23,6 +23,10 @@ BSPC_URL="https://github.com/bnoordhuis/bspc.git"
 PACKER_URL="https://github.com/wbthomason/packer.nvim.git"
 ANTIBODY_URL="git.io/antibody"
 
+VSCOED_DEB_URL="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+DISCORD_DEB_URL="https://discord.com/api/download?platform=linux&format=deb"
+GOOGLECHROME_DEB_URL="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+
 ORCHIS_THEME_URL="https://github.com/vinceliuice/Orchis-theme.git"
 ORCHIS_THEME_SSH_URL="git@github.com:vinceliuice/Orchis-theme.git"
 FIREFOX_THEME_URL="https://github.com/vinceliuice/WhiteSur-firefox-theme.git"
@@ -476,39 +480,64 @@ flatpakRun() {
 
 flatpakRepoAdd flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpakInstall com.raggesilver.BlackBox
-flatpakInstall com.google.Chrome
 flatpakInstall com.spotify.Client
 
 sleep 2
 
 flatpakRun com.raggesilver.BlackBox
-flatpakRun com.google.Chrome
 flatpakRun com.spotify.Client
 
 sleep 2
 clear
 
-###### ----- Installing Application with Snap ----- ######
-banner "📦 Installing Application with Snap..."
+###### ----- Installing Application ----- ######
 
-snapInstall() {
-    if ! snap list 2>/dev/null | grep -q "^$1\$"; then
-        echo -e "${YELLOW}⏳ Installing $1...${RESET}"
-        sudo snap install "$1"
-        if [ $? -eq 0 ]; then
-            echo -e "${GREEN}✔️ $1 installed${RESET}"
-            sleep 1
-        else
-            echo -e "${RED}✖️ $1 not installed${RESET}"
-            sleep 1
-        fi
-    else
-        echo -e "${GREEN}✔️ $1 already installed${RESET}"
-    fi
-}
+banner "📦 Installing Application..."
 
-snapInstall code --classic
-snapInstall discord
+read -rp "⚠️ Do you want to install Visual Studio Code? [Y/n] " yn
+    case $yn in
+        [Yy]* ) wget $VSCOED_DEB_URL -O $HOME/Downloads/vscode.deb
+                sudo dpkg -i $HOME/Downloads/vscode.deb
+                rm -rf $HOME/Downloads/vscode.deb
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Visual Studio Code installed${RESET}"
+                else
+                    echo -e "${RED}✖️ Visual Studio Code not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
+read -rp "⚠️ Do you want to install Discord? [Y/n] " yn
+    case $yn in
+        [Yy]* ) wget $DISCORD_DEB_URL -O $HOME/Downloads/discord.deb
+                sudo dpkg -i $HOME/Downloads/discord.deb
+                rm -rf $HOME/Downloads/discord.deb
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Discord installed${RESET}"
+                else
+                    echo -e "${RED}✖️ Discord not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
+read -rp "⚠️ Do you want to install Google Chrome? [Y/n] " yn
+    case $yn in
+        [Yy]* ) wget $GOOGLECHROME_DEB_URL -O $HOME/Downloads/google-chrome.deb
+                sudo dpkg -i $HOME/Downloads/google-chrome.deb
+                rm -rf $HOME/Downloads/google-chrome.deb
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Google Chrome installed${RESET}"
+                else
+                    echo -e "${RED}✖️ Google Chrome not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
 
 sleep 2
 clear
