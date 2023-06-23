@@ -884,7 +884,7 @@ linking() {
 banner "🔗 Linking files..."
 
 for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig $DOTFILE_DIR/.czrc; do
-    linking "$file" "$HOME"
+    linking "$file" .
     sleep 1
 done
 
