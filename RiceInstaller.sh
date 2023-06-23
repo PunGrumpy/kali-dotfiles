@@ -483,7 +483,7 @@ snapInstall() {
     fi
 }
 
-snapInstall code
+snapInstall code --classic
 snapInstall discord
 
 ###### ----- Installing XFCE4 Orchis Theme ----- ######
