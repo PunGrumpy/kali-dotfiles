@@ -20,5 +20,8 @@
 # LOAD STARSHIP
 eval "$(starship init zsh)"
 
+# ANTIBODY
+eval "$(antibody init)"
+
 # LOAD DIRENV
 eval "$(direnv hook zsh)"

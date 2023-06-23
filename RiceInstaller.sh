@@ -241,7 +241,7 @@ libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libj
 dependencies_apt_repo=(ppa:papirus/papirus)
 dependencies_tap_brew=(pungrumpy/formulas spicetify/homebrew-tap)
 dependencies_brew=(git gcc \
-tmux neovim starship antibody docker spiceify-cli \
+tmux neovim starship docker spiceify-cli \
 peco exa dockercolorize \
 python3 pyenv go node pnpm \
 fzf fd bat hub)
@@ -485,6 +485,26 @@ snapInstall() {
 
 snapInstall code --classic
 snapInstall discord
+
+sleep 2
+clear
+
+###### ----- Installing Antibody ----- ######
+banner "📦 Installing Antibody..."
+
+if ! command -v antibody >/dev/null; then
+    echo -e "${YELLOW}⏳ Installing Antibody...${RESET}"
+    curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Antibody installed${RESET}"
+    else
+        echo -e "${RED}✖️ Antibody not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ Antibody already installed${RESET}"
+    sleep 1
+fi
 
 sleep 2
 clear
