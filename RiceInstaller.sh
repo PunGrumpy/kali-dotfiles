@@ -220,38 +220,17 @@ clear
 ###### ----- Updating system ----- ######
 banner "📦 Updating system..."
 
-if [[ -x "$(command -v apt)" ]]; then
-    sudo apt update && sudo apt upgrade -y
-    sleep 1
-elif [[ -x "$(command -v pacman)" ]]; then
-    sudo pacman -Syu
-    sleep 1
-elif [[ -x "$(command -v dnf)" ]]; then
-    sudo dnf update -y
-    sleep 1
-elif [[ -x "$(command -v zypper)" ]]; then
-    sudo zypper update -y
-    sleep 1
-elif [[ -x "$(command -v yum)" ]]; then
-    sudo yum update -y
-    sleep 1
-elif [[ -x "$(command -v brew)" ]]; then
-    brew update && brew upgrade
-    sleep 1
-elif [[ -x "$(command -v cargo)" ]]; then
-    cargo update
-    sleep 1
-else
-    echo -e "${RED}✖️ System not updated${RESET}"
-    sleep 1
-fi
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y &&
+brew upgrade && brew cleanup &&
+flatpak update -y &&
+cargo update &&
 
 echo -e "${GREEN}✔️ System updated${RESET}"
 sleep 2
 clear
 
 ###### ----- Installing dependencies ----- ######
-dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq docker.io \
+dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq docker.io snapd \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
 bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl papirus-icon-theme \
@@ -474,20 +453,38 @@ flatpakRun() {
 flatpakRepoAdd flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpakInstall com.raggesilver.BlackBox
 flatpakInstall com.google.Chrome
-flatpakInstall com.discordapp.Discord
-flatpakInstall com.visualstudio.code
 flatpakInstall com.spotify.Client
 
 sleep 2
 
 flatpakRun com.raggesilver.BlackBox
 flatpakRun com.google.Chrome
-flatpakRun com.discordapp.Discord
-flatpakRun com.visualstudio.code
 flatpakRun com.spotify.Client
 
 sleep 2
 clear
+
+###### ----- Installing Application with Snap ----- ######
+banner "📦 Installing Application with Snap..."
+
+snapInstall() {
+    if ! snap list 2>/dev/null | grep -q "^$1\$"; then
+        echo -e "${YELLOW}⏳ Installing $1...${RESET}"
+        sudo snap install "$1"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✔️ $1 installed${RESET}"
+            sleep 1
+        else
+            echo -e "${RED}✖️ $1 not installed${RESET}"
+            sleep 1
+        fi
+    else
+        echo -e "${GREEN}✔️ $1 already installed${RESET}"
+    fi
+}
+
+snapInstall code
+snapInstall discord
 
 ###### ----- Installing XFCE4 Orchis Theme ----- ######
 banner "🖼️ Installing XFCE4 Orchis Theme..."
@@ -638,7 +635,8 @@ if [[ -f "$HOME/.ssh/ed_25519_github" ]]; then
 else
     echo -e "${YELLOW}⏳ Creating SSH key...${RESET}"
     read -rp "✒️ Enter your email: " email
-    ssh-keygen -t ed25519 -C "$email"
+    read -rp "✒️ Enter your file name: " file_name
+    ssh-keygen -t ed25519 -C "$email" -f "$HOME/.ssh/$file_name"
     echo -e "${GREEN}✔️ SSH key created${RESET}"
     sleep 1
 fi
@@ -649,43 +647,22 @@ if [[ -f "$HOME/.ssh/config" ]]; then
 else
     echo -e "${YELLOW}⏳ Creating SSH config...${RESET}"
     touch "$HOME/.ssh/config"
-    echo -e "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/ed_25519_github\n\tAddKeysToAgent yes" >> "$HOME/.ssh/config"
+    echo -e "Host github.com\n\tHostName github.com\n\tUser git\n\tIdentityFile ~/.ssh/$file_name\n\tAddKeysToAgent yes" >> "$HOME/.ssh/config"
     echo -e "${GREEN}✔️ SSH config created${RESET}"
     sleep 1
 fi
 
-if [[ -f "$HOME/.ssh/ed_25519_github.pub" ]]; then
+if [[ -f "$HOME/.ssh/$file_name.pub" ]]; then
     echo -e "${GREEN}✔️ SSH public key already created${RESET}"
     sleep 1
 else
     echo -e "${YELLOW}⏳ Creating SSH public key...${RESET}"
-    cat "$HOME/.ssh/ed_25519_github.pub" | xclip -selection clipboard
+    cat "$HOME/.ssh/$file_name.pub" | xclip -selection clipboard
     echo -e "${YELLOW}⚠️ SSH public key copied to clipboard (Don't forget to add it to your GitHub account)${RESET}"
     sleep 1
     echo -e "${GREEN}✔️ SSH public key created${RESET}"
     sleep 1
 fi
-
-sleep 2
-clear
-
-###### ----- Backup ----- ######
-banner "📦 Creating backup..."
-
-if [[ -d "$HOME/.backup_dotfiles" ]]; then
-    echo -e "${GREEN}✔️ Backup folder already created${RESET}"
-else
-    echo -e "${YELLOW}⏳ Creating backup folder...${RESET}"
-    mkdir -p "$HOME/.backup_dotfiles/$DATE"
-    echo -e "${GREEN}✔️ Backup folder created${RESET}"
-fi
-
-cp -R "$HOME/.config" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .config copied${RESET}" || echo -e "${RED}✖️ .config not copied${RESET}"
-cp -R "$HOME/.zshrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .zshrc copied${RESET}" || echo -e "${RED}✖️ .zshrc not copied${RESET}"
-cp -R "$HOME/.czrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .czrc copied${RESET}" || echo -e "${RED}✖️ .czrc not copied${RESET}"
-cp -R "$HOME/.gitconfig" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitconfig copied${RESET}" || echo -e "${RED}✖️ .gitconfig not copied${RESET}"
-cp -R "$HOME/.gitignore" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitignore copied${RESET}" || echo -e "${RED}✖️ .gitignore not copied${RESET}"
-cp -R "$HOME/.docker" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .docker copied${RESET}" || echo -e "${RED}✖️ .docker not copied${RESET}"
 
 sleep 2
 clear
@@ -749,6 +726,27 @@ printf '\n%s%sYour GIT config has been updated.%s\n\n' "${BOLD}" "${GREEN}" "${R
 sleep 2
 clear
 
+###### ----- Backup ----- ######
+banner "📦 Creating backup..."
+
+if [[ -d "$HOME/.backup_dotfiles" ]]; then
+    echo -e "${GREEN}✔️ Backup folder already created${RESET}"
+else
+    echo -e "${YELLOW}⏳ Creating backup folder...${RESET}"
+    mkdir -p "$HOME/.backup_dotfiles/$DATE"
+    echo -e "${GREEN}✔️ Backup folder created${RESET}"
+fi
+
+cp -R "$HOME/.config" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .config copied${RESET}" || echo -e "${RED}✖️ .config not copied${RESET}"
+cp -R "$HOME/.zshrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .zshrc copied${RESET}" || echo -e "${RED}✖️ .zshrc not copied${RESET}"
+cp -R "$HOME/.czrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .czrc copied${RESET}" || echo -e "${RED}✖️ .czrc not copied${RESET}"
+cp -R "$HOME/.gitconfig" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitconfig copied${RESET}" || echo -e "${RED}✖️ .gitconfig not copied${RESET}"
+cp -R "$HOME/.gitignore" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitignore copied${RESET}" || echo -e "${RED}✖️ .gitignore not copied${RESET}"
+cp -R "$HOME/.docker" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .docker copied${RESET}" || echo -e "${RED}✖️ .docker not copied${RESET}"
+
+sleep 2
+clear
+
 ###### ----- Remove old files ----- ######
 banner "🗑️ Removing old files..."
 
@@ -766,8 +764,12 @@ removing() {
 }
 
 for file in $HOME/.config $HOME/.zshrc $HOME/.czrc $HOME/.gitconfig $HOME/.gitignore $HOME/.docker; do
-    removing "$file"
-    sleep 1
+    if [[ -d "$file" ]]; then
+        removing "$file"
+    else
+        echo -e "${GREEN}✔️ $file already removed${RESET}"
+        sleep 1
+    fi
 done
 
 sleep 2
@@ -803,20 +805,10 @@ linking() {
 
 banner "🔗 Linking files..."
 
-read -rp "⚠️ Do you want to link your dotfiles? [Y/n] " yn
-    case $yn in
-        [Yy]* ) if [[ -d "$HOME/.dotfiles" ]]; then
-                    for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig $DOTFILE_DIR/.czrc; do
-                        linking "$file" "$HOME"
-                        sleep 1
-                    done
-                else
-                    echo -e "${RED}✖️ Dotfiles not cloned${RESET}"
-                    exit 1
-                fi;;
-        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
-        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
-    esac
+for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig $DOTFILE_DIR/.czrc; do
+    linking "$file" "$HOME"
+    sleep 1
+done
 
 sleep 2
 clear
@@ -825,7 +817,28 @@ clear
 banner "📂 Copying files..."
 
 echo "Don't forget copy file from $HOME/.dotfiles/.config/blackbox/xcad.json to Blackbox config (if you use flatpak $HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/xcad.json)"
-sleep 2
+sleep 3
+
+read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy? [Y/n]" yn
+    case $yn in
+        [Yy]* ) if ! [[ -d "/usr/share/backgrounds/grumpy" ]]; then
+                    echo -e "${YELLOW}⏳ Creating /usr/share/backgrounds/grumpy...${RESET}"
+                    sudo mkdir -p "/usr/share/backgrounds/grumpy"
+                    echo -e "${GREEN}✔️ /usr/share/backgrounds/grumpy created${RESET}"
+                    sleep 1
+                else
+                    echo -e "${GREEN}✔️ /usr/share/backgrounds/grumpy already created${RESET}"
+                    sleep 1
+                fi
+                sudo cp "$HOME/.dotfiles/.github/wallpaper/*" /usr/share/backgrounds/grumpy
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Wallpaper copied${RESET}"
+                else
+                    echo -e "${RED}✖️ Wallpaper not copied${RESET}"
+                fi;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
 
 sleep 2
 clear
@@ -1003,8 +1016,7 @@ banner "🖥️ Permissions BSPWM..."
 
 if [[ -d "$HOME/.dotfiles/.config/bspwm" ]]; then
     cd "$HOME/.dotfiles/.config/bspwm"
-    chmod +x bspwmrc
-    chmod +x scripts/*
+    chmod +x bspwmrc scripts/*
     cd $HOME
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ Permissions BSPWM${RESET}"
