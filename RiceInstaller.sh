@@ -707,7 +707,7 @@ else
     sleep 1
 fi
 
-if [[ -f "$HOME/.ssh/ed_25519_github" ]]; then
+if [[ -f "$HOME/.ssh/id_ed25519_github" ]]; then
     echo -e "${GREEN}✔️ SSH key already created${RESET}"
     sleep 1
 else
