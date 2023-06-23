@@ -920,16 +920,7 @@ read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy
 
 read -rp "🖼️ Do you want to copy themes to /usr/share/themes? [Y/n] " yn
     case $yn in
-        [Yy]* ) if ! [[ -d "/usr/share/themes/Orchis" ]]; then
-                    echo -e "${YELLOW}⏳ Creating /usr/share/themes/Orchis...${RESET}"
-                    sudo mkdir -p "/usr/share/themes/Orchis"
-                    echo -e "${GREEN}✔️ /usr/share/themes/Orchis created${RESET}"
-                    sleep 1
-                else
-                    echo -e "${GREEN}✔️ /usr/share/themes/Orchis already created${RESET}"
-                    sleep 1
-                fi
-                sudo cp -R $HOME/.themes/* /usr/share/themes/Orchis
+        [Yy]* ) sudo cp -R $HOME/.themes/* /usr/share/themes/
                 if [ $? -eq 0 ]; then
                     echo -e "${GREEN}✔️ Themes copied${RESET}"
                 else
@@ -941,16 +932,7 @@ read -rp "🖼️ Do you want to copy themes to /usr/share/themes? [Y/n] " yn
 
 read -rp "🖼️ Do you want to copy icons to /usr/share/icons? [Y/n] " yn
     case $yn in
-        [Yy]* ) if ! [[ -d "/usr/share/icons/WhiteSur" ]]; then
-                    echo -e "${YELLOW}⏳ Creating /usr/share/icons/WhiteSur...${RESET}"
-                    sudo mkdir -p "/usr/share/icons/WhiteSur"
-                    echo -e "${GREEN}✔️ /usr/share/icons/WhiteSur created${RESET}"
-                    sleep 1
-                else
-                    echo -e "${GREEN}✔️ /usr/share/icons/WhiteSur already created${RESET}"
-                    sleep 1
-                fi
-                sudo cp -R $HOME/.icons/* /usr/share/icons/WhiteSur
+        [Yy]* ) sudo cp -R $HOME/.icons/* /usr/share/icons/
                 if [ $? -eq 0 ]; then
                     echo -e "${GREEN}✔️ Icons copied${RESET}"
                 else
