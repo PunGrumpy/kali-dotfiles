@@ -345,6 +345,24 @@ done
 sleep 2
 clear
 
+###### ----- Setting up Snap ----- ######
+banner "📦 Setting up Snap..."
+
+if ! command -v snap >/dev/null; then
+    echo -e "${YELLOW}⏳ Setting up Snap...${RESET}"
+    sudo systemctl enable snapd
+    sudo systemctl start snapd
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Snap setted up${RESET}"
+    else
+        echo -e "${RED}✖️ Snap not setted up${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ Snap already setted up${RESET}"
+    sleep 1
+fi
+
 ###### ----- Installing Direnv ----- ######
 banner "📦 Installing Direnv..."
 
@@ -588,6 +606,9 @@ read -rp "⚠️ Do you want to install WhiteSur Icon Theme? [Y/n] " yn
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
     esac
+
+sleep 2
+clear
 
 ###### ----- Installing commitizen ----- ######
 banner "📦 Installing commitizen..."
