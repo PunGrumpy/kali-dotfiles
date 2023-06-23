@@ -932,7 +932,7 @@ read -rp "🖼️ Do you want to copy themes to /usr/share/themes? [Y/n] " yn
 
 read -rp "🖼️ Do you want to copy icons to /usr/share/icons? [Y/n] " yn
     case $yn in
-        [Yy]* ) sudo cp -R $HOME/.icons/* /usr/share/icons/
+        [Yy]* ) sudo cp -R $HOME/.local/share/icons/* /usr/share/icons/
                 if [ $? -eq 0 ]; then
                     echo -e "${GREEN}✔️ Icons copied${RESET}"
                 else
