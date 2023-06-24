@@ -32,6 +32,7 @@ alias dps="docker ps | dockercolorize"
 alias di="docker images | dockercolorize"
 alias dpsa="docker ps -a | dockercolorize"
 alias dcps="docker compose ps | dockercolorize"
+alias dstats="docker stats --no-stream | dockercolorize"
 
 alias dlogs="docker logs --tail 100 --follow --timestamps --details"
 alias dwipe="docker system prune -a --volumes --force"
