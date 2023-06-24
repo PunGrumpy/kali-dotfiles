@@ -22,6 +22,7 @@ NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts.git"
 BSPC_URL="https://github.com/bnoordhuis/bspc.git"
 PACKER_URL="https://github.com/wbthomason/packer.nvim.git"
 ANTIBODY_URL="git.io/antibody"
+DOCKER_DESKTOP_URL="https://desktop.docker.com/linux/main/amd64/docker-desktop-4.20.1-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
 
 VSCOED_DEB_URL="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 DISCORD_DEB_URL="https://discord.com/api/download?platform=linux&format=deb"
@@ -240,7 +241,7 @@ sleep 2
 clear
 
 ###### ----- Installing dependencies ----- ######
-dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq docker.io snapd \
+dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq docker.io snapd docker-ce docker-ce-cli containerd.io uidmap \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
 bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl papirus-icon-theme \
@@ -251,7 +252,7 @@ libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libj
 dependencies_apt_repo=(ppa:papirus/papirus)
 dependencies_tap_brew=(pungrumpy/formulas spicetify/homebrew-tap)
 dependencies_brew=(git gcc \
-tmux neovim starship docker spiceify-cli \
+tmux neovim starship spiceify-cli \
 peco exa dockercolorize \
 python3 pyenv go node pnpm \
 fzf fd bat hub)
@@ -542,6 +543,30 @@ read -rp "⚠️ Do you want to install Google Chrome? [Y/n] " yn
 sleep 2
 clear
 
+###### ----- Installing Docker Desktop ----- ######
+banner "📦 Installing Docker Desktop..."
+
+read -rp "⚠️ Do you want to install Docker Desktop? [Y/n] " yn
+    case $yn in
+        [Yy]* ) curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg
+                echo "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable" | sudo tee /etc/apt/sources.list.d/docker.list
+                sudo systemctl start docker
+                sudo usermod -aG docker $USER
+                wget $DOCKER_DESKTOP_URL -O $HOME/Downloads/docker-desktop.deb
+                sudo apt install $HOME/Downloads/docker-desktop.deb
+                rm -rf $HOME/Downloads/docker-desktop.deb
+                systemctl --user start docker-desktop
+                systemctl --user enable docker-desktop
+                if [ $? -eq 0 ]; then
+                    echo -e "${GREEN}✔️ Docker Desktop installed${RESET}"
+                else
+                    echo -e "${RED}✖️ Docker Desktop not installed${RESET}"
+                fi
+                sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
 ###### ----- Installing Antibody ----- ######
 banner "📦 Installing Antibody..."
 
@@ -799,11 +824,11 @@ banner "📂 Cloning dotfiles..."
 
 is_exist=0
 
-if [[ -d "$HOME/.dotfiles" ]]; then
+if [[ -d $DOTFILE_DIR ]]; then
     echo -e "${GREEN}✔️ Dotfiles already cloned${RESET}"
     read -rp "⚠️ Do you want to delete the existing dotfiles? [Y/n] " yn
         case $yn in
-            [Yy]* ) rm -rf "$HOME/.dotfiles" && echo -e "\n${GREEN}✔️ Dotfiles deleted${RESET}\n" && is_exist=1;;
+            [Yy]* ) rm -rf $DOTFILE_DIR && echo -e "\n${GREEN}✔️ Dotfiles deleted${RESET}\n" && is_exist=1;;
             [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n" && is_exist=0;;
             * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
         esac
@@ -814,7 +839,7 @@ fi
 
 if [[ "$is_exist" -eq 1 ]]; then
     echo -e "${YELLOW}⏳ Cloning dotfiles...${RESET}"
-    git clone "$DOTFILE_SSH_URL" "$HOME/.dotfiles" || git clone "$DOTFILE_URL" "$HOME/.dotfiles"
+    git clone "$DOTFILE_SSH_URL" $DOTFILE_DIR || git clone "$DOTFILE_URL" $DOTFILE_DIR
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✔️ Dotfiles cloned${RESET}"
         sleep 1
@@ -943,7 +968,7 @@ clear
 ###### ----- Copying files ----- ######
 banner "📂 Copying files..."
 
-echo "Don't forget copy file from $HOME/.dotfiles/.config/blackbox/xcad.json to Blackbox config (if you use flatpak $HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/xcad.json)"
+echo "Don't forget copy file from $DOTFILE_DIR/.config/blackbox/xcad.json to Blackbox config (if you use flatpak $HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/xcad.json)"
 sleep 3
 
 read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy? [Y/n] " yn
@@ -957,7 +982,7 @@ read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy
                     echo -e "${GREEN}✔️ /usr/share/backgrounds/grumpy already created${RESET}"
                     sleep 1
                 fi
-                sudo cp -R $HOME/.dotfiles/.github/wallpaper/* /usr/share/backgrounds/grumpy
+                sudo cp -R $DOTFILE_DIR/.github/wallpaper/* /usr/share/backgrounds/grumpy
                 if [ $? -eq 0 ]; then
                     echo -e "${GREEN}✔️ Wallpaper copied${RESET}"
                 else
@@ -999,12 +1024,12 @@ banner "🖥️ Changing window manager..."
 
 read -rp "⚠️ Do you want to change your window manager? [Y/n] " yn
     case $yn in
-        [Yy]* ) if [[ -f "$HOME/.dotfiles/.config/bspwm/bspwmrc" ]]; then
+        [Yy]* ) if [[ -f "$DOTFILE_DIR/.config/bspwm/bspwmrc" ]]; then
                     echo -e "${YELLOW}⏳ Changing window manager...${RESET}"
                     sudo update-alternatives --set x-window-manager /usr/bin/bspwm
                     echo -e "${GREEN}✔️ Window manager changed${RESET}"
                 else
-                    echo -e "${RED}✖️ .dotfiles/.config/bspwm/bspwmrc not found${RESET}"
+                    echo -e "${RED}✖️ $DOTFILE_DIR/.config/bspwm/bspwmrc not found${RESET}"
                     exit 1
                 fi;;
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
@@ -1053,13 +1078,13 @@ clear
 ###### ----- Use antibody to install plugins ----- ######
 banner "🔌 Installing antibody plugins..."
 
-if [[ -f "$HOME/.dotfiles/.config/zsh/plugins.zsh" ]]; then
+if [[ -f "$DOTFILE_DIR/.config/zsh/plugins.zsh" ]]; then
     echo -e "${YELLOW}⏳ Installing antibody plugins...${RESET}"
-    antibody bundle < ~/.dotfiles/.config/zsh/plugins.zsh > ~/.zsh_plugins.zsh
+    antibody bundle < $DOTFILE_DIR/.config/zsh/plugins.zsh > ~/.zsh_plugins.zsh
     echo -e "${GREEN}✔️ Antibody plugins installed${RESET}"
     sleep 1
 else
-    echo -e "${RED}✖️ .dotfiles/.config/zsh/plugins.zsh not found${RESET}"
+    echo -e "${RED}✖️ $DOTFILE_DIR/.config/zsh/plugins.zsh not found${RESET}"
     sleep 1
     exit 1
 fi
@@ -1070,7 +1095,7 @@ clear
 ###### ----- Enable MPD Service ----- ######
 banner "🎵 Enabling MPD Service..."
 
-mpd_conf="$HOME/.dotfiles/.config/mpd/mpd.conf"
+mpd_conf="$DOTFILE_DIR/.config/mpd/mpd.conf"
 
 if [[ -f $mpd_conf ]]; then
     echo -e "${YELLOW}⏳ Enabling MPD Service...${RESET}"
@@ -1155,7 +1180,7 @@ echo -e "${YELLOW}⏳ Installing Hack NF Compatible font...${RESET}"
 if [ ! -d "/usr/share/fonts/HackNFCompatiple" ]; then
     sudo mkdir -p "/usr/share/fonts/HackNFCompatiple"
 fi
-sudo cp -r "$HOME/.dotfiles/fonts/HackNFCompatiple/*" "/usr/share/fonts/HackNFCompatiple"
+sudo cp -r "$DOTFILE_DIR/fonts/HackNFCompatiple/*" "/usr/share/fonts/HackNFCompatiple"
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✔️ Hack NF Compatible font installed${RESET}"
 else
@@ -1194,8 +1219,8 @@ clear
 ##### ----- Permissions BSPWM ----- ######
 banner "🖥️ Permissions BSPWM..."
 
-if [[ -d "$HOME/.dotfiles/.config/bspwm" ]]; then
-    cd "$HOME/.dotfiles/.config/bspwm"
+if [[ -d "$DOTFILE_DIR/.config/bspwm" ]]; then
+    cd "$DOTFILE_DIR/.config/bspwm"
     chmod +x bspwmrc scripts/*
     cd $HOME
     if [ $? -eq 0 ]; then
@@ -1205,7 +1230,7 @@ if [[ -d "$HOME/.dotfiles/.config/bspwm" ]]; then
     fi
     sleep 1
 else
-    echo -e "${RED}✖️ .dotfiles/.config/bspwm/bspwmrc not found${RESET}"
+    echo -e "${RED}✖️ $DOTFILE_DIR/.config/bspwm/bspwmrc not found${RESET}"
     sleep 1
     exit 1
 fi
