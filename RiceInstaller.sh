@@ -151,8 +151,24 @@ done
 sleep2
 clear
 
-###### ----- Checking internet connection ----- ######
-banner "🌐 Checking internet connection..."
+###### ----- Checking Working Directory ----- ######
+banner "📂 Checking Working Directory..."
+
+# this file must be in the $HOME directory
+if [[ ! -f "$HOME/.RiceInstaller.sh" ]]; then
+    echo -e "${RED}✖️ This file must be in the $HOME directory${RESET}"
+    sleep 1
+    exit 1
+else
+    echo -e "${GREEN}✔️ This file is in the $HOME directory${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
+###### ----- Checking Internet Connection ----- ######
+banner "🌐 Checking Internet Connection..."
 
 if ping -q -c 1 -W 1 google.com >/dev/null; then
     echo -e "${GREEN}✔️ You are connected to the internet${RESET}"
