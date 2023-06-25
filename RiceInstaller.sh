@@ -35,6 +35,7 @@ FIREFOX_THEME_SSH_URL="git@github.com:vinceliuice/WhiteSur-firefox-theme.git"
 WHITESUR_ICONS_THEME_URL="https://github.com/vinceliuice/WhiteSur-icon-theme.git"
 WHITESUR_ICONS_THEME_SSH_URL="git@github.com:vinceliuice/WhiteSur-icon-theme.git"
 MACOS_MOUSE_URL="https://github.com/ful1e5/apple_cursor/releases/download/v2.0.0/macOS-Monterey.tar.gz"
+GRUB_DEDSEC_THEME_URL="https://gitlab.com/VandalByte/dedsec-grub-theme.git"
 
 FONT_HACK_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz"
 FONT_JETBRAINS_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.tar.xz"
@@ -696,6 +697,32 @@ read -rp "⚠️ Do you want to install macOS Mouse Cursor? [Y/n] " yn
                     echo -e "${RED}✖️ macOS Mouse Cursor not installed${RESET}"
                 fi
                 sleep 1;;
+        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
+        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
+    esac
+
+###### ----- Installing Grub DedSec Theme ----- ######
+banner "🖼️ Installing Grub DedSec Theme..."
+
+read -rp "⚠️ Do you want to install Grub DedSec Theme? [Y/n] " yn
+    case $yn in
+        [Yy]* ) if ! [[ -d $HOME/.grub-themes/dedsec-grub-theme ]]; then
+                    mkdir -p $HOME/.grub-themes
+                    git clone $GRUB_DEDSEC_THEME_URL $HOME/.grub-themes/dedsec-grub-theme
+                    cd $HOME/.grub-themes/dedsec-grub-theme
+                    sudo python3 dedsec-theme.py --install
+                    sleep 3
+                    cd $HOME
+                    if [ $? -eq 0 ]; then
+                        echo -e "${GREEN}✔️ Grub DedSec Theme installed${RESET}"
+                    else
+                        echo -e "${RED}✖️ Grub DedSec Theme not installed${RESET}"
+                    fi
+                    sleep 1
+                else
+                    echo -e "${GREEN}✔️ Grub DedSec Theme already installed${RESET}"
+                    sleep 1
+                fi;;
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
     esac
