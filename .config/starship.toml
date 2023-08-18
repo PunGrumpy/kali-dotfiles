@@ -70,13 +70,17 @@ staged = '[++\($count\)](green)'
 renamed = "襁 "
 deleted = " "
 
-# Shows kubernetes context and namespace
+# Kubernetes
 [kubernetes]
 format = 'via [🐳 $context\($namespace\)](bold purple) '
 disabled = false
 
 [kubernetes.context_aliases]
 "docker-desktop" = "docker"
+
+# Gradle
+[gradle]
+symbol = "🐘 "
 
 # ---
 
@@ -106,4 +110,7 @@ disabled = true
 disabled = true
 
 [gcloud]
+disabled = true
+
+[kotlin]
 disabled = true
