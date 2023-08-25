@@ -37,6 +37,7 @@ Group.new('CursorLineNr', colors.orange, colors.base02, styles.NONE, colors.base
 Group.new('Visual', colors.none, colors.base03, styles.reverse)
 Group.new('Comment', colors.base2, colors.none, styles.italic)
 Group.new('LineNr', colors.base2, colors.none, styles.NONE)
+Group.new('NormalFloat', colors.base1, colors.NONE, styles.NONE)
 
 local cError = groups.Error.fg
 local cInfo = groups.Information.fg
