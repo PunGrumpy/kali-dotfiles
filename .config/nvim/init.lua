@@ -25,4 +25,3 @@ end
 if is_win then
   require('kali-pungrumpy.windows')
 end
-

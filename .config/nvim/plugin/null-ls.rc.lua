@@ -24,6 +24,8 @@ null_ls.setup {
     null_ls.builtins.diagnostics.fish,
     null_ls.builtins.diagnostics.zsh,
     null_ls.builtins.diagnostics.golangci_lint,
+    null_ls.builtins.diagnostics.actionlint,
+    null_ls.builtins.diagnostics.hadolint,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
