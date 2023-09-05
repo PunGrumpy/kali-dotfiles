@@ -12,10 +12,11 @@ ts.setup {
   },
   ensure_installed = {
     "markdown",
+    "markdown_inline",
     "tsx",
+    "typescript",
     "toml",
     "fish",
-    "bash",
     "php",
     "json",
     "yaml",
@@ -23,10 +24,16 @@ ts.setup {
     "css",
     "html",
     "lua",
-    "go"
+    "go",
+    "gosum",
+    "gomod",
   },
   autotag = {
     enable = true,
+  },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
   },
 }
 
