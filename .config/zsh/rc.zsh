@@ -17,6 +17,9 @@
 [[ -f ~/.dotfiles/.config/zsh/starship.zsh ]] && source ~/.dotfiles/.config/zsh/starship.zsh
 [[ -f ~/.dotfiles/.config/zsh/wsl.zsh ]] && source ~/.dotfiles/.config/zsh/wsl.zsh
 
+# INIT ZSH
+autoload -Uz compinit
+
 # LOAD STARSHIP
 eval "$(starship init zsh)"
 

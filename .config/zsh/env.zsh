@@ -1,9 +1,9 @@
-#    _______   ________   ___      ___ 
+#    _______   ________   ___      ___
 #   |\  ___ \ |\   ___  \|\  \    /  /|
 #   \ \   __/|\ \  \\ \  \ \  \  /  / /
-#    \ \  \_|/_\ \  \\ \  \ \  \/  / / 
-#     \ \  \_|\ \ \  \\ \  \ \    / /  
-#      \ \_______\ \__\\ \__\ \__/ /   
+#    \ \  \_|/_\ \  \\ \  \ \  \/  / /
+#     \ \  \_|\ \ \  \\ \  \ \    / /
+#      \ \_______\ \__\\ \__\ \__/ /
 #       \|_______|\|__| \|__|\|__|/
 
 # EDITOR
@@ -23,6 +23,9 @@ fi
 
 # CARGO
 [[ -d ~/.cargo ]] && export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+
+# COMPLETIONS
+[[ -d ~/.completions ]] && export PATH="$HOME/.completions:$PATH"
 
 # NVM DIRECTORY
 export NVM_DIR="$HOME/.nvm"
