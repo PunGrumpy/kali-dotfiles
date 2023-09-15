@@ -129,6 +129,16 @@ nvim_lsp.gopls.setup {
   root_dir = nvim_lsp.util.root_pattern("go.mod", "go.work", ".git"),
 }
 
+nvim_lsp.pylsp.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+nvim_lsp.mojo.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
