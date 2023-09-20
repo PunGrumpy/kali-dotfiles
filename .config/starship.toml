@@ -13,7 +13,7 @@ format = """$env_var $all"""  # Add custom formatting before other stuff
 
 # Shows an icon depending on what distro it is running on
 [env_var.STARSHIP_DISTRO]
-format = '[$env_value](bold white) '
+format = '[$env_value](bold white)'
 variable = "STARSHIP_DISTRO"
 disabled = false
 
@@ -81,6 +81,26 @@ disabled = false
 # Gradle
 [gradle]
 symbol = "🐘 "
+
+# Anaconda
+[conda]
+symbol = "🐍 "
+
+# Rust
+[rust]
+symbol = "🦀 "
+
+# Go
+[golang]
+symbol = "🐹 "
+
+# .NET
+[dotnet]
+symbol = " "
+
+# Java
+[java]
+symbol = "☕ "
 
 # ---
 
