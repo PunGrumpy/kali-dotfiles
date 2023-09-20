@@ -20,21 +20,21 @@ I use Kali Purple Linux with two sessions: **XFCE** and **BSPWM**. I primarily u
 
 This repository contains my personal dotfiles for Kali Linux. It contains my configuration for the following tools:
 
-| Tool                                                                            | Description                                                                              |
-| ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| [bspwm](https://github.com/baskerville/bspwm)                                   | A tiling window manager based on binary space partitioning.                              |
-| [xfce](https://www.xfce.org/)                                                   | A lightweight desktop environment for UNIX-like operating systems.                       |
-| [Zsh](https://www.zsh.org/)                                                     | A shell designed for interactive use, although it is also a powerful scripting language. |
-| [Alacritty](https://alacritty.org/)                                             | A cross-platform, GPU-accelerated terminal emulator.                                     |
-| [Neovim](https://neovim.io/)                                                    | A hyperextensible Vim-based text editor.                                                 |
-| [Neofetch](https://github.com/dylanaraps/neofetch)                              | A command-line system information tool written in bash 3.2+.                             |
-| [Ranger](https://github.com/ranger/ranger)                                      | A console file manager with VI key bindings.                                             |
-| [mpd](https://www.musicpd.org/) & [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) | A flexible, powerful, server-side application for playing music.                         |
-| [Polybar](https://polybar.github.io/)                                           | A fast and easy-to-use tool for creating status bars.                                    |
-| [Picom](https://github.com/yshui/picom)                                         | A lightweight compositor for X11.                                                        |
-| [Rofi](https://github.com/davatorium/rofi)                                      | A window switcher, application launcher and dmenu replacement.                           |
-| [Homebrew](https://brew.sh/)                                                    | A package manager for macOS.                                                             |
-| [Spicetify](https://spicetify.app/)                                             | A command-line tool to customize Spotify client.                                         |
+| Tool                                                                            | Description                                                        |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [bspwm](https://github.com/baskerville/bspwm)                                   | A tiling window manager based on binary space partitioning.        |
+| [xfce](https://www.xfce.org/)                                                   | A lightweight desktop environment for UNIX-like operating systems. |
+| [Fish](https://fishshell.com/)                                                  | A smart and user-friendly command line shell.                      |
+| [Alacritty](https://alacritty.org/)                                             | A cross-platform, GPU-accelerated terminal emulator.               |
+| [Neovim](https://neovim.io/)                                                    | A hyperextensible Vim-based text editor.                           |
+| [Neofetch](https://github.com/dylanaraps/neofetch)                              | A command-line system information tool written in bash 3.2+.       |
+| [Ranger](https://github.com/ranger/ranger)                                      | A console file manager with VI key bindings.                       |
+| [mpd](https://www.musicpd.org/) & [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) | A flexible, powerful, server-side application for playing music.   |
+| [Polybar](https://polybar.github.io/)                                           | A fast and easy-to-use tool for creating status bars.              |
+| [Picom](https://github.com/yshui/picom)                                         | A lightweight compositor for X11.                                  |
+| [Rofi](https://github.com/davatorium/rofi)                                      | A window switcher, application launcher and dmenu replacement.     |
+| [Homebrew](https://brew.sh/)                                                    | A package manager for macOS.                                       |
+| [Spicetify](https://spicetify.app/)                                             | A command-line tool to customize Spotify client.                   |
 
 > **Note**: I have wallpaper on **[.github/wallpaper](./.github/wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
 
