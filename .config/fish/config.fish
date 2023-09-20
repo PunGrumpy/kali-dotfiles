@@ -72,6 +72,7 @@ if command -qv starship &>/dev/null
     eval (starship init fish)
 end
 
+# Direnv
 if command -qv direnv &>/dev/null
     eval (direnv hook fish)
 end

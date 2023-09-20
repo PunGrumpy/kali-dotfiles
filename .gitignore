@@ -86,6 +86,7 @@ Pods/
 .config/fish/conf.d/pisces*
 .config/fish/conf.d/nvm*
 .config/fish/conf.d/puffer_*
+.config/fish/conf.d/fish-ssh*
 
 # Karabiner
 .config/karabiner/automatic_backups
