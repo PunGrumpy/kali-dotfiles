@@ -60,19 +60,23 @@ set -gx PATH $HOME/.local/bin/python2 $PATH
 # Anaconda
 set -gx PATH $HOME/.anaconda3/bin $PATH
 if test -f $HOME/.anaconda3/bin/conda
-    eval $HOME/.anaconda3/bin/conda "shell.fish" "hook" $argv | source
+    eval $HOME/.anaconda3/bin/conda "shell.fish" hook $argv | source
 end
 
 # Go
 set -gx GOPATH $HOME/.go
 
 # Starship
-if command -qv starship &> /dev/null
+if command -qv starship &>/dev/null
     source (dirname (status --current-filename))/starship.fish
     eval (starship init fish)
 end
 
+if command -qv direnv &>/dev/null
+    eval (direnv hook fish)
+end
+
 # Docker
-if command -qv docker &> /dev/null && command -qv dockercolorize &> /dev/null
+if command -qv docker &>/dev/null && command -qv dockercolorize &>/dev/null
     source (dirname (status --current-filename))/docker.fish
 end
