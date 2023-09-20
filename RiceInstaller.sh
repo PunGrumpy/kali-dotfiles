@@ -21,7 +21,7 @@ DOTFILE_SSH_URL="git@github.com:PunGrumpy/kali-dotfiles.git"
 NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts.git"
 BSPC_URL="https://github.com/bnoordhuis/bspc.git"
 PACKER_URL="https://github.com/wbthomason/packer.nvim.git"
-ANTIBODY_URL="git.io/antibody"
+FISHER_URL="https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish"
 DOCKER_DESKTOP_URL="https://desktop.docker.com/linux/main/amd64/docker-desktop-4.20.1-amd64.deb?utm_source=docker&utm_medium=webreferral&utm_campaign=docs-driven-download-linux-amd64"
 
 VSCOED_DEB_URL="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
@@ -129,7 +129,7 @@ clear
 
 banner "👋 Welcome!"
 printf '%s%s%s\n\n' "${BOLD}" "${DATE}" "${RESET}"
-printf '%s%sThis script will check if you have the %s%sKALI LINUX%s %s%sneccessary dependencies, and if not, it will install them. Then, it will clone the RICE in your HOME directory.\nAfter that, it will create a secure backup of your files, and then copy the new files to your computer.\n\nMy dotfiles DO NOT modify any of your system configurations.\nYou will be prompted for your root password to install missing dependencies and/or to switch to zsh shell if its not your default.\n\nThis script doesnt have the potential power to break your system, it only copies files from my repository to your HOME directory.%s\n\n' "${BOLD}" "${RED}" "${PURPLE}" "${BEEP}" "${RESET}" "${BOLD}" "${RED}" "${RESET}"
+printf '%s%sThis script will check if you have the %s%sKALI LINUX%s %s%sneccessary dependencies, and if not, it will install them. Then, it will clone the RICE in your HOME directory.\nAfter that, it will create a secure backup of your files, and then copy the new files to your computer.\n\nMy dotfiles DO NOT modify any of your system configurations.\nYou will be prompted for your root password to install missing dependencies and/or to switch to fish shell if its not your default.\n\nThis script doesnt have the potential power to break your system, it only copies files from my repository to your HOME directory.%s\n\n' "${BOLD}" "${RED}" "${PURPLE}" "${BEEP}" "${RESET}" "${BOLD}" "${RED}" "${RESET}"
 
 while true; do
     read -rp "⚖️ Do you want to continue? [Y/n] " yn
@@ -199,6 +199,9 @@ if [[ -f "$HOME/.bash_profile" ]]; then
     source /home/linuxbrew/.linuxbrew/bin/brew shellenv 2>/dev/null
 elif [[ -f "$HOME/.zshrc" ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv) 2>/dev/null"
+elif [[ -f "$HOME/.config/fish/config.fish" ]]; then
+    echo 'set -gx PATH /home/linuxbrew/.linuxbrew/bin $PATH' >> ~/.config/fish/config.fish
+    eval (brew --env 2>/dev/null)
 fi
 
 sleep 2
@@ -240,6 +243,9 @@ if [[ -f "$HOME/.bash_profile" ]]; then
     sudo source "$HOME/.cargo/env" 2>/dev/null
 elif [[ -f "$HOME/.zshrc" ]]; then
     sudo eval "$("$HOME/.cargo/env")" 2>/dev/null
+elif [[ -f "$HOME/.config/fish/config.fish" ]]; then
+    sudo echo 'set -gx PATH $HOME/.cargo/bin $PATH' >> ~/.config/fish/config.fish
+    sudo eval (cargo env 2>/dev/null)
 fi
 
 sleep 2
@@ -258,7 +264,7 @@ sleep 2
 clear
 
 ###### ----- Installing dependencies ----- ######
-dependencies_apt=(curl wget zsh neofetch build-essential alacritty jq docker.io snapd docker-ce docker-ce-cli containerd.io uidmap \
+dependencies_apt=(curl wget neofetch build-essential alacritty jq docker.io snapd docker-ce docker-ce-cli containerd.io uidmap \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
 bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl papirus-icon-theme \
@@ -267,12 +273,14 @@ libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keys
 cmake-data python3-sphinx libcairo2-dev libxcb1-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev \
 libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libuv1-dev libnl-genl-3-dev)
 dependencies_apt_repo=(ppa:papirus/papirus)
-dependencies_tap_brew=(pungrumpy/formulas spicetify/homebrew-tap)
+dependencies_tap_brew=(pungrumpy/formulas spicetify/homebrew-tap oven-sh/bun)
 dependencies_brew=(git gcc \
-tmux neovim starship spiceify-cli \
+fish tmux neovim starship spiceify-cli \
 peco exa dockercolorize \
-python3 pyenv go node pnpm \
+python3 pyenv go node pnpm bun \
 fzf fd bat hub)
+dependencies_fisher=(jethrokuan/z PatrickF1/fzf.fish nickeb96/puffer-fish laughedelic/pisces danhper/fish-ssh-agent)
+
 
 aptIsInstalled() {
     if apt list --installed 2>/dev/null | grep -q "^$1/"; then
@@ -583,33 +591,6 @@ read -rp "⚠️ Do you want to install Docker Desktop? [Y/n] " yn
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
     esac
-
-###### ----- Installing Antibody ----- ######
-banner "📦 Installing Antibody..."
-
-if ! command -v antibody >/dev/null; then
-    echo -e "${YELLOW}⏳ Installing Antibody...${RESET}"
-    if [ ! -f "/usr/local/bin/antibody" ]; then
-        sudo mkdir -p /usr/local/bin/antibody
-        sudo chown -R $(whoami) /usr/local/bin/antibody
-        curl -sfL $ANTIBODY_URL | sh -s - -b /usr/local/bin/antibody
-    else
-        sudo chown -R $(whoami) /usr/local/bin/antibody
-        curl -sfL $ANTIBODY_URL | sh -s - -b /usr/local/bin/antibody
-    fi
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ Antibody installed${RESET}"
-    else
-        echo -e "${RED}✖️ Antibody not installed${RESET}"
-    fi
-    sleep 1
-else
-    echo -e "${GREEN}✔️ Antibody already installed${RESET}"
-    sleep 1
-fi
-
-sleep 2
-clear
 
 ###### ----- Installing XFCE4 Orchis Theme ----- ######
 banner "🖼️ Installing XFCE4 Orchis Theme..."
@@ -933,7 +914,6 @@ else
 fi
 
 cp -R "$HOME/.config" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .config copied${RESET}" || echo -e "${RED}✖️ .config not copied${RESET}"
-cp -R "$HOME/.zshrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .zshrc copied${RESET}" || echo -e "${RED}✖️ .zshrc not copied${RESET}"
 cp -R "$HOME/.czrc" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .czrc copied${RESET}" || echo -e "${RED}✖️ .czrc not copied${RESET}"
 cp -R "$HOME/.gitconfig" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitconfig copied${RESET}" || echo -e "${RED}✖️ .gitconfig not copied${RESET}"
 cp -R "$HOME/.gitignore" "$HOME/.backup_dotfiles/$DATE" && echo -e "${GREEN}✔️ .gitignore copied${RESET}" || echo -e "${RED}✖️ .gitignore not copied${RESET}"
@@ -958,7 +938,7 @@ removing() {
     fi
 }
 
-for file in $HOME/.config $HOME/.zshrc $HOME/.czrc $HOME/.gitconfig $HOME/.gitignore $HOME/.docker; do
+for file in $HOME/.config $HOME/.czrc $HOME/.gitconfig $HOME/.gitignore $HOME/.docker; do # $HOME/.zshrc
     if [[ -d "$file" ]]; then
         removing "$file"
     else
@@ -1000,7 +980,7 @@ linking() {
 
 banner "🔗 Linking files..."
 
-for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.zshrc $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig $DOTFILE_DIR/.czrc; do
+for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig $DOTFILE_DIR/.czrc; do # $DOTFILE_DIR/.zshrc
     linking "$file" .
     sleep 1
 done
@@ -1118,23 +1098,6 @@ fi
 sleep 2
 clear
 
-###### ----- Use antibody to install plugins ----- ######
-banner "🔌 Installing antibody plugins..."
-
-if [[ -f "$DOTFILE_DIR/.config/zsh/plugins.zsh" ]]; then
-    echo -e "${YELLOW}⏳ Installing antibody plugins...${RESET}"
-    antibody bundle < $DOTFILE_DIR/.config/zsh/plugins.zsh > ~/.zsh_plugins.zsh
-    echo -e "${GREEN}✔️ Antibody plugins installed${RESET}"
-    sleep 1
-else
-    echo -e "${RED}✖️ $DOTFILE_DIR/.config/zsh/plugins.zsh not found${RESET}"
-    sleep 1
-    exit 1
-fi
-
-sleep 2
-clear
-
 ###### ----- Enable MPD Service ----- ######
 banner "🎵 Enabling MPD Service..."
 
@@ -1157,15 +1120,53 @@ clear
 ###### ----- Change shell ----- ######
 banner "🔀 Changing shell..."
 
-if [[ "$SHELL" != "/usr/bin/zsh" ]]; then
+if [[ "$SHELL" != "/home/linuxbrew/.linuxbrew/bin/fish" ]]; then
     echo -e "${YELLOW}⏳ Changing shell...${RESET}"
-    chsh -s /usr/bin/zsh
+    chsh -s /home/linuxbrew/.linuxbrew/bin/fish
     echo -e "${GREEN}✔️ Shell changed${RESET}"
+    $SHELL -l
     sleep 1
 else
     echo -e "${GREEN}✔️ Shell already changed${RESET}"
     sleep 1
 fi
+
+sleep 2
+clear
+
+###### ----- Installing Fisher ----- ######
+banner "📦 Installing Fisher..."
+
+if ! command -v fisher >/dev/null; then
+    echo -e "${YELLOW}⏳ Installing Fisher...${RESET}"
+    curl -sL $FISHER_URL | source && fisher install jorgebucaran/fisher
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ Fisher installed${RESET}"
+    else
+        echo -e "${RED}✖️ Fisher not installed${RESET}"
+    fi
+    sleep 1
+else
+    echo -e "${GREEN}✔️ Fisher already installed${RESET}"
+    sleep 1
+fi
+
+sleep 2
+clear
+
+###### ----- Use fisher install plugin ----- ######
+banner "🔌 Installing fisher plugins..."
+
+for plugin in $dependencies_fisher; do
+    echo -e "${YELLOW}⏳ Installing $plugin...${RESET}"
+    fisher install $plugin
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✔️ $plugin installed${RESET}"
+    else
+        echo -e "${RED}✖️ $plugin not installed${RESET}"
+    fi
+    sleep 1
+done
 
 sleep 2
 clear
@@ -1288,7 +1289,7 @@ printf '%s%sYour dotfiles have been installed.%s\n\n' "${BOLD}" "${GREEN}" "${RE
 
 printf '%s%sPlease restart your computer to apply all changes.%s\n\n' "${BOLD}" "${RED}" "${RESET}"
 
-if [[ "$SHELL" != "/usr/bin/zsh" ]]; then
+if [[ "$SHELL" != "/home/linuxbrew/.linuxbrew/bin/fish" ]]; then
     printf '%s%sPlease restart your terminal to apply the new shell.%s\n\n' "${BOLD}" "${RED}" "${RESET}"
 fi
 
