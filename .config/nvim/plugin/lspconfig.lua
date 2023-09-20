@@ -129,12 +129,7 @@ nvim_lsp.gopls.setup {
   root_dir = nvim_lsp.util.root_pattern("go.mod", "go.work", ".git"),
 }
 
-nvim_lsp.pylsp.setup {
-  on_attach = on_attach,
-  capabilities = capabilities
-}
-
-nvim_lsp.mojo.setup {
+nvim_lsp.ruff_lsp.setup {
   on_attach = on_attach,
   capabilities = capabilities
 }
