@@ -63,6 +63,14 @@ if test -f $HOME/.anaconda3/bin/conda
     eval $HOME/.anaconda3/bin/conda "shell.fish" hook $argv | source
 end
 
+
+# Rye (Python)
+set -gx PATH $HOME/.rye/shims $PATH
+
+# Modular (Mojo)
+set -gx MODULAR_HOME $HOME/.modular
+set -gx PATH $MODULAR_HOME/pkg/packages.modular.com_mojo/bin $PATH
+
 # Go
 set -gx GOPATH $HOME/.go
 
