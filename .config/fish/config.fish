@@ -74,6 +74,9 @@ set -gx PATH $MODULAR_HOME/pkg/packages.modular.com_mojo/bin $PATH
 # Go
 set -gx GOPATH $HOME/.go
 
+# Java
+set -gx _JAVA_OPTIONS "-Dawt.useSystemAAFontSettings=off"
+
 # Starship
 if command -qv starship &>/dev/null
     source (dirname (status --current-filename))/starship.fish
