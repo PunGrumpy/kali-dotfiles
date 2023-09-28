@@ -28,7 +28,10 @@ null_ls.setup {
     null_ls.builtins.diagnostics.terraform_validate,
     null_ls.builtins.diagnostics.tfsec,
     null_ls.builtins.diagnostics.ansiblelint,
-    null_ls.builtins.diagnostics.actionlint
+    null_ls.builtins.diagnostics.actionlint,
+    null_ls.builtins.diagnostics.checkstyle.with({
+      extra_args = { "-c", "/google_checks.xml" },
+    }),
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then
@@ -51,4 +54,3 @@ vim.api.nvim_create_user_command(
   end,
   { nargs = 0 }
 )
-
