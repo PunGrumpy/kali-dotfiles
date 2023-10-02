@@ -139,9 +139,10 @@ nvim_lsp.docker_compose_language_service.setup {
   capabilities = capabilities
 }
 
-nvim_lsp.ruff_lsp.setup {
+nvim_lsp.helm_ls.setup {
   on_attach = on_attach,
-  capabilities = capabilities
+  capabilities = capabilities,
+  cmd = { "helm", "serve" }
 }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
