@@ -145,6 +145,11 @@ nvim_lsp.helm_ls.setup {
   cmd = { "helm_ls", "serve" }
 }
 
+nvim_lsp.mojo.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
