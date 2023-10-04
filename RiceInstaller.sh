@@ -608,7 +608,7 @@ read -rp "⚠️ Do you want to install XFCE4 Orchis Theme? [Y/n] " yn
                 else
                     echo -e "${RED}✖️ XFCE4 Orchis Theme not installed${RESET}"
                 fi
-                sleep 1
+                sleep 1;;
         [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
         * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
     esac
