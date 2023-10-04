@@ -267,7 +267,7 @@ clear
 dependencies_apt=(curl wget neofetch build-essential alacritty jq docker.io snapd docker-ce docker-ce-cli containerd.io uidmap \
 cmake libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev xclip pkg-config \
 libgtk-3-dev librust-atk-dev meson libwayland-dev gobject-introspection libgirepository1.0-dev gtk-doc-tools valac libgtk-layer-shell-dev \
-bspwm sxhkd polybar rofi picom feh dunst mpd ncmpcpp ranger playerctl papirus-icon-theme \
+feh dunst mpd ncmpcpp ranger playerctl papirus-icon-theme \
 libx11-dev libxft-dev libxinerama-dev \
 libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev \
 cmake-data python3-sphinx libcairo2-dev libxcb1-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev \
@@ -1042,26 +1042,6 @@ read -rp "🖼️ Do you want to copy icons to /usr/share/icons? [Y/n] " yn
 sleep 2
 clear
 
-###### ----- Change window manager ----- ######
-banner "🖥️ Changing window manager..."
-
-read -rp "⚠️ Do you want to change your window manager? [Y/n] " yn
-    case $yn in
-        [Yy]* ) if [[ -f "$DOTFILE_DIR/.config/bspwm/bspwmrc" ]]; then
-                    echo -e "${YELLOW}⏳ Changing window manager...${RESET}"
-                    sudo update-alternatives --set x-window-manager /usr/bin/bspwm
-                    echo -e "${GREEN}✔️ Window manager changed${RESET}"
-                else
-                    echo -e "${RED}✖️ $DOTFILE_DIR/.config/bspwm/bspwmrc not found${RESET}"
-                    exit 1
-                fi;;
-        [Nn]* ) echo -e "\n${GREEN}✔️ Skipping...${RESET}\n";;
-        * ) echo -e "\n${RED}⚠️ Please answer 'y' or 'n'.${RESET}\n";;
-    esac
-
-sleep 2
-clear
-
 ###### ----- Setting up docker config ----- ######
 banner "🐳 Setting up docker config..."
 
@@ -1255,28 +1235,6 @@ if [ $? -eq 0 ]; then
     echo -e "${GREEN}✔️ Noto sans thai font installed${RESET}"
 else
     echo -e "${RED}✖️ Noto sans thai font not installed${RESET}"
-fi
-
-sleep 2
-clear
-
-##### ----- Permissions BSPWM ----- ######
-banner "🖥️ Permissions BSPWM..."
-
-if [[ -d "$DOTFILE_DIR/.config/bspwm" ]]; then
-    cd "$DOTFILE_DIR/.config/bspwm"
-    chmod +x bspwmrc scripts/*
-    cd $HOME
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}✔️ Permissions BSPWM${RESET}"
-    else
-        echo -e "${RED}✖️ Permissions BSPWM${RESET}"
-    fi
-    sleep 1
-else
-    echo -e "${RED}✖️ $DOTFILE_DIR/.config/bspwm/bspwmrc not found${RESET}"
-    sleep 1
-    exit 1
 fi
 
 sleep 2
