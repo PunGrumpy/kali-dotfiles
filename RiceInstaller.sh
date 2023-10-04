@@ -196,7 +196,7 @@ else
 fi
 
 if [[ -f "$HOME/.bash_profile" ]]; then
-    source /home/linuxbrew/.linuxbrew/bin/brew shellenv 2>/dev/null
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv) 2>/dev/null"
 elif [[ -f "$HOME/.zshrc" ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv) 2>/dev/null"
 elif [[ -f "$HOME/.config/fish/config.fish" ]]; then
