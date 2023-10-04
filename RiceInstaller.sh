@@ -240,7 +240,7 @@ else
 fi
 
 if [[ -f "$HOME/.bash_profile" ]]; then
-    sudo source "$HOME/.cargo/env" 2>/dev/null
+    sudo eval "$("$HOME/.cargo/env")" 2>/dev/null
 elif [[ -f "$HOME/.zshrc" ]]; then
     sudo eval "$("$HOME/.cargo/env")" 2>/dev/null
 elif [[ -f "$HOME/.config/fish/config.fish" ]]; then
