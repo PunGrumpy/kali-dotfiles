@@ -45,4 +45,3 @@ lspkind.init({
     TypeParameter = ""
   },
 })
-
