@@ -152,6 +152,8 @@ Pods/
 .config/torbrowser/
 .config/xfce4/
 .config/znt/
+.config/Postman
+.config/helm
 
 # Python
 __pycache__/
