@@ -51,6 +51,9 @@ set -gx PATH $PNPM_HOME $PATH
 # Bun
 set -gx PATH $HOME/.bun/bin $PATH
 
+# Deno
+set -gx PATH $HOME/.deno/bin $PATH
+
 # Python
 set -gx PATH $HOME/.local/bin $PATH
 
