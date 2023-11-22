@@ -13,8 +13,8 @@ function M.shark()
 				count = 0
 			end
 			if count >= 10 then
-				ok, id = pcall(vim.notify, "What the freak! Hold on, I'm calling the Shark...", vim.log.levels.WARN, {
-					icon = "🦈",
+				ok, id = pcall(vim.notify, "Hold on, why you hurry up!", vim.log.levels.WARN, {
+					icon = "👾",
 					replace = id,
 					keep = function()
 						return count >= 10
