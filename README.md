@@ -10,6 +10,10 @@
 
 ![XFCE](./.github/asset/xfce.png)
 
+### `Neovim`
+
+![Neovim](./.github/asset/neovim.png)
+
 ## `📖` About
 
 I use Kali Purple Linux with one session: **XFCE**. I provide my dotfiles for you to use. Feel free to use it. I will update this repository if I have a new configuration.
