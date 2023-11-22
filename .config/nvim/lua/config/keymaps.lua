@@ -1,4 +1,4 @@
-local discipline = require("mephisto.discipline")
+local discipline = require("pungrumpy.discipline")
 
 discipline.shark()
 
