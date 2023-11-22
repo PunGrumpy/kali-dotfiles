@@ -1,4 +1,10 @@
 return {
+	-- Copilot configuration
+	{
+		"zbirenbaum/copilot.lua",
+		opts = { filetypes = { ["*"] = true } },
+	},
+
 	-- Create annotations with one keybind, and jump your cursor in the inserted annotation
 	{
 		"danymat/neogen",
