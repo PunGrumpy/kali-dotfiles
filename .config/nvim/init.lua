@@ -6,22 +6,14 @@
 --     \ \_\ \_\ \____/\ \_____\ `\___/ /\_____\\ \_\\ \_\
 --      \/_/\/_/\/___/  \/_____/`\/__/  \/_____/ \/_/ \/_/
 
-require('kali-pungrumpy.base')
-require('kali-pungrumpy.highlights')
-require('kali-pungrumpy.maps')
-require('kali-pungrumpy.plugins')
+if vim.loader then
+  vim.loader.enable()
+end
 
-local has = vim.fn.has
-local is_mac = has "macunix"
-local is_linux = has "unix"
-local is_win = has "win32"
+_G.dd = function(...)
+  require('util.debug').dump(...)
+end
 
-if is_mac then
-  require('kali-pungrumpy.macos')
-end
-if is_linux then
-  require('kali-pungrumpy.linux')
-end
-if is_win then
-  require('kali-pungrumpy.windows')
-end
+vim.print = _G.dd
+
+require('config.lazy')
