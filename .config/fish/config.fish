@@ -80,6 +80,10 @@ set -gx PATH $GOPATH/bin $PATH
 # Java
 set -gx _JAVA_OPTIONS ""
 
+# Julia
+set -gx JULIA_PATH $HOME/.julia
+set -gx PATH $JULIA_PATH/bin $PATH
+
 # Starship
 if command -qv starship &>/dev/null
     source (dirname (status --current-filename))/starship.fish
