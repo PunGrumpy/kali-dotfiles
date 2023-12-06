@@ -152,8 +152,9 @@ Pods/
 .config/torbrowser/
 .config/xfce4/
 .config/znt/
-.config/Postman
-.config/helm
+.config/Postman/
+.config/helm/
+.config/figma-linux/
 
 # Python
 __pycache__/
