@@ -156,6 +156,8 @@ Pods/
 .config/helm/
 .config/figma-linux/
 .config/go/
+.config/bpyutils/
+.config/pipupgrade/
 
 # Python
 __pycache__/
