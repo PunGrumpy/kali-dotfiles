@@ -78,7 +78,8 @@ set -gx GOPATH $HOME/.go
 set -gx PATH $GOPATH/bin $PATH
 
 # Java
-set -gx _JAVA_OPTIONS ""
+set -gx JAVA_HOME $HOME/.java
+set -gx PATH $JAVA_HOME/bin $PATH
 
 # Julia
 set -gx JULIA_PATH $HOME/.julia
