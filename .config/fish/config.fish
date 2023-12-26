@@ -78,7 +78,7 @@ set -gx GOPATH $HOME/.go
 set -gx PATH $GOPATH/bin $PATH
 
 # Java
-set -gx JAVA_HOME $HOME/.java
+set -gx JAVA_HOME /usr/lib/jvm/jdk-21-oracle-x64/bin/
 set -gx PATH $JAVA_HOME/bin $PATH
 
 # Julia
