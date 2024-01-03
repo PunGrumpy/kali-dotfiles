@@ -77,10 +77,6 @@ set -gx PATH $MODULAR_HOME/pkg/packages.modular.com_mojo/bin $PATH
 set -gx GOPATH $HOME/.go
 set -gx PATH $GOPATH/bin $PATH
 
-# Java
-set -gx JAVA_HOME /usr/lib/jvm/jdk-21-oracle-x64/bin/
-set -gx PATH $JAVA_HOME/bin $PATH
-
 # Julia
 set -gx JULIA_PATH $HOME/.julia
 set -gx PATH $JULIA_PATH/bin $PATH
