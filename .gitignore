@@ -158,6 +158,7 @@ Pods/
 .config/go/
 .config/bpyutils/
 .config/pipupgrade/
+.config/ristretto/
 
 # Python
 __pycache__/
