@@ -1,6 +1,6 @@
 ---
 name: Switch Kubernetes Namespace
-command: kubectl config set-context --current --namespace={{ namespace }}
+command: kubectl config set-context --current --namespace={{namespace}}
 tags:
   - kubernetes
   - namespace

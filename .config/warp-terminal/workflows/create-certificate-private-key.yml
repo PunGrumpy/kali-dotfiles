@@ -1,6 +1,6 @@
 ---
 name: Create SSL/TLS Certificate Private Key
-command: openssl genrsa -out {{ certificate }}.key {{ length }}
+command: openssl genrsa -out {{certificate}}.key {{length}}
 tags:
   - openssl
   - certificate
