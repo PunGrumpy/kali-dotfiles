@@ -981,6 +981,9 @@ linking() {
 banner "🔗 Linking files..."
 
 for file in $DOTFILE_DIR/.config $DOTFILE_DIR/.gitignore $DOTFILE_DIR/.gitconfig $DOTFILE_DIR/.czrc; do # $DOTFILE_DIR/.zshrc
+    if [[ "$file" == "$DOTFILE_DIR/.config/warp-terminal" ]]; then
+        continue
+    fi
     linking "$file" .
     sleep 1
 done
@@ -991,7 +994,10 @@ clear
 ###### ----- Copying files ----- ######
 banner "📂 Copying files..."
 
-echo "Don't forget copy file from $DOTFILE_DIR/.config/blackbox/xcad.json to Blackbox config (if you use flatpak $HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/xcad.json)"
+echo "Don't forget copy file from $DOTFILE_DIR/.config/blackbox/dullahan.json to Blackbox config (if you use flatpak $HOME/.var/app/com.raggesilver.BlackBox/data/blackbox/schemes/dullahan.json)"
+sleep 3
+
+echo "Don't forget copy file from $DOTFILE_DIR/.config/warp-terminal to Warp Terminal config (if you use default Warp Terminal $HOME/.local/share/warp-terminal)"
 sleep 3
 
 read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy? [Y/n] " yn
