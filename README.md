@@ -34,7 +34,7 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 | [Blackbox Terminal](https://gitlab.gnome.org/raggesilver/blackbox)              | A terminal a beautiful and customizable terminal with GTK4.        |
 | [Warp Terminal](https://warp.dev/)                                              | A terminal integrated with AI to make you more fantastic.          |
 
-> **Note**: I have wallpaper on **[.github/wallpaper](./.github/wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
+> **Note**: I have wallpaper on **[.wallpaper](./.wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
 
 ## `📦` Installation
 
