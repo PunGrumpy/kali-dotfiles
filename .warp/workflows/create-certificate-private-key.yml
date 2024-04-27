@@ -1,0 +1,24 @@
+---
+name: Create SSL/TLS Certificate Private Key
+command: openssl genrsa -out {{ certificate }}.key {{ length }}
+tags:
+  - openssl
+  - certificate
+  - private key
+  - ssl
+  - tls
+description: Generate a private key for an SSL/TLS certificate.
+arguments:
+  - name: certificate
+    description: The name of the certificate.
+    default: certificate
+  - name: length
+    description: The length of the private key.
+    default: 4096
+source_url: https://github.com/PunGrumpy/kali-dotfiles
+author: PunGrumpy
+author_url: https://pungrumpy.com
+shells:
+  - bash
+  - zsh
+  - fish

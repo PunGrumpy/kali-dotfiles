@@ -1,0 +1,19 @@
+---
+name: Switch Kubernetes Namespace
+command: kubectl config set-context --current --namespace={{ namespace }}
+tags:
+  - kubernetes
+  - namespace
+  - switch
+description: Switch the current Kubernetes namespace.
+arguments:
+  - name: namespace
+    description: The name of the namespace.
+    default: default
+source_url: https://github.com/PunGrumpy/kali-dotfiles
+author: PunGrumpy
+author_url: https://pungrumpy.com
+shells:
+  - bash
+  - zsh
+  - fish
