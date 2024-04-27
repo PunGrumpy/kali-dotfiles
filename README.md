@@ -31,6 +31,8 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 | [mpd](https://www.musicpd.org/) & [ncmpcpp](https://github.com/ncmpcpp/ncmpcpp) | A flexible, powerful, server-side application for playing music.   |
 | [Homebrew](https://brew.sh/)                                                    | A package manager for macOS.                                       |
 | [Spicetify](https://spicetify.app/)                                             | A command-line tool to customize Spotify client.                   |
+| [Blackbox Terminal](https://gitlab.gnome.org/raggesilver/blackbox)              | A terminal a beautiful and customizable terminal with GTK4.        |
+| [Warp Terminal](https://warp.dev/)                                              | A terminal integrated with AI to make you more fantastic.          |
 
 > **Note**: I have wallpaper on **[.github/wallpaper](./.github/wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
 
