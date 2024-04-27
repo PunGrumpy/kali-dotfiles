@@ -1011,7 +1011,7 @@ read -rp "🖼️ Do you want to copy wallpaper to /usr/share/backgrounds/grumpy
                     echo -e "${GREEN}✔️ /usr/share/backgrounds/grumpy already created${RESET}"
                     sleep 1
                 fi
-                sudo cp -R $DOTFILE_DIR/.github/wallpaper/* /usr/share/backgrounds/grumpy
+                sudo cp -R $DOTFILE_DIR/.wallpaper/* /usr/share/backgrounds/grumpy
                 if [ $? -eq 0 ]; then
                     echo -e "${GREEN}✔️ Wallpaper copied${RESET}"
                 else
