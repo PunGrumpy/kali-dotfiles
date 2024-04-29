@@ -83,7 +83,6 @@ set -gx PATH $JULIA_PATH/bin $PATH
 
 # Starship
 if command -qv starship &>/dev/null
-    source (dirname (status --current-filename))/starship.fish
     eval (starship init fish)
 end
 
