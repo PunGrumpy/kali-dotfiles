@@ -22,8 +22,8 @@ disabled = false
 Windows = ' '
 Arch = '󰣇'
 Ubuntu = ''
-Macos = '󰀵'
 Kali = ' '
+Macos = '󰀵'
 
 # ---
 
@@ -70,6 +70,10 @@ deleted = '[󰍶 deleted=${count}](red) '
 [kubernetes]
 format = 'via [󱃾 $context\($namespace\)](bold purple) '
 disabled = false
+
+[[kubernetes.contexts]]
+context_pattern = '*docker-desktop*'
+context_alias = 'docker'
 
 # Go
 [golang]
