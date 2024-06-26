@@ -34,11 +34,13 @@ This repository contains my personal dotfiles for Kali Linux. It contains my con
 | [Blackbox Terminal](https://gitlab.gnome.org/raggesilver/blackbox)              | A terminal a beautiful and customizable terminal with GTK4.        |
 | [Warp Terminal](https://warp.dev/)                                              | A terminal integrated with AI to make you more fantastic.          |
 
-> **Note**: I have wallpaper on **[.wallpaper](./.wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
+> [!NOTE]
+> I have wallpaper on **[.wallpaper](./.wallpaper/)** directory. You can use it if you want. (In further update, I will add more wallpaper)
 
 ## `📦` Installation
 
-> **Warning**: Don't AFK while installing this dotfiles. You might miss some important prompts. I recommend you to read the script first before running it. You can also install the dotfiles manually by copying the files to their respective directories. I recommend you to use the script instead. It's easier and faster.
+> [!WARNING]
+> Don't AFK while installing this dotfiles. You might miss some important prompts. I recommend you to read the script first before running it. You can also install the dotfiles manually by copying the files to their respective directories. I recommend you to use the script instead. It's easier and faster.
 
 ### `📥` Prerequisites
 
