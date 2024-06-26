@@ -6,13 +6,9 @@
 
 ## `📸` Screenshots
 
-### `XFCE`
-
-![XFCE](./.github/asset/xfce.png)
-
-### `Neovim`
-
-![Neovim](./.github/asset/neovim.png)
+| XFCE                              | Neovim                                |
+| --------------------------------- | ------------------------------------- |
+| ![XFCE](./.github/asset/xfce.png) | ![Neovim](./.github/asset/neovim.png) |
 
 ## `📖` About
 
