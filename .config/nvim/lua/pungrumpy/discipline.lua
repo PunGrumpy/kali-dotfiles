@@ -1,6 +1,6 @@
 local M = {}
 
-function M.shark()
+function M.alien()
 	---@type table?
 	local id
 	local ok = true

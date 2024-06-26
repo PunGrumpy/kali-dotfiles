@@ -1,6 +1,6 @@
 local discipline = require("pungrumpy.discipline")
 
-discipline.shark()
+discipline.alien()
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
