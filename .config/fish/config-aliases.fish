@@ -4,8 +4,7 @@ alias la "ls -A"
 alias ll "ls -l"
 alias lla "ll -A"
 alias g git
-alias vim nvim
-command -qv nvim && alias vim nvim
+command -qv nvim; and alias vim nvim
 
 # EZA
 if type -q eza
@@ -14,36 +13,32 @@ if type -q eza
 end
 
 # Docker
-if command -q docker && command -q dockercolorzie
-    alias dps "docker ps | dockercolorize"
-    alias dpsa "docker ps -a | dockercolorize"
-    alias di "docker images | dockercolorize"
-    alias dcps "docker compose ps | dockercolorize"
-    alias dstats "docker stats --no-stream | dockercolorize"
+if command -q docker
+    if command -q dockercolorize
+        alias dps "docker ps | dockercolorize"
+        alias dpsa "docker ps -a | dockercolorize"
+        alias di "docker images | dockercolorize"
+        alias dcps "docker compose ps | dockercolorize"
+        alias dstats "docker stats --no-stream | dockercolorize"
+    end
 end
 
 # Kubernetes
 if command -q kubectl
-    if command -q kubecolor
-        alias kubectl kubecolor
-    end
+    command -q kubecolor; and alias kubectl kubecolor
     alias k kubectl
 end
 
-if command -q kubectx && command -q kubens
+if command -q kubectx; and command -q kubens
     alias kctx kubectx
     alias kns kubens
 end
 
 # Helm
-if command -q helm
-    alias h helm
-end
+command -q helm; and alias h helm
 
 # Terraform
-if command -q terraform
-    alias tf terraform
-end
+command -q terraform; and alias tf terraform
 
 # Ansible
 if command -q ansible
@@ -52,8 +47,7 @@ if command -q ansible
 end
 
 # Python
-if command -q python3 && command -q pip3
+if command -q python3; and command -q pip3
     alias python python3
     alias pip pip3
 end
-
