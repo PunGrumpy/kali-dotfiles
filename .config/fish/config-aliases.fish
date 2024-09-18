@@ -7,7 +7,7 @@ alias g git
 command -qv nvim; and alias vim nvim
 
 # EZA
-if type -q eza
+if command -q eza
     alias ll "eza -l -g --icons"
     alias lla "ll -a"
 end
