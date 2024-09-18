@@ -19,9 +19,6 @@ set -g theme_display_user yes
 set -g theme_hide_hostname no
 set -g theme_hostname always
 
-# Aliases
-source (dirname (status --current-filename))/config-aliases.fish
-
 # OS
 switch (uname)
     case Darwin
@@ -31,6 +28,9 @@ switch (uname)
     case '*'
         source (dirname (status --current-filename))/config-windows.fish
 end
+
+# Aliases
+source (dirname (status --current-filename))/config-aliases.fish
 
 ########### Source all the things ###########
 
