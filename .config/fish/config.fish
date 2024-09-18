@@ -20,13 +20,7 @@ set -g theme_hide_hostname no
 set -g theme_hostname always
 
 # Aliases
-alias ls "ls -p -G"
-alias la "ls -A"
-alias ll "ls -l"
-alias lla "ll -A"
-alias g git
-alias vim nvim
-command -qv nvim && alias vim nvim
+source (dirname (status --current-filename))/config-aliases.fish
 
 # OS
 switch (uname)
@@ -37,6 +31,8 @@ switch (uname)
     case '*'
         source (dirname (status --current-filename))/config-windows.fish
 end
+
+########### Source all the things ###########
 
 # Cargo
 set -gx PATH $HOME/.cargo/bin $PATH
@@ -77,9 +73,9 @@ set -gx PATH $MODULAR_HOME/pkg/packages.modular.com_mojo/bin $PATH
 set -gx GOPATH $HOME/.go
 set -gx PATH $GOPATH/bin $PATH
 
-# Julia
-set -gx JULIA_PATH $HOME/.julia
-set -gx PATH $JULIA_PATH/bin $PATH
+# PDTM
+set -gx PDTM_HOME $HOME/.pdtm
+set -gx PATH $PDTM_HOME/go/bin $PATH
 
 # Starship
 if command -qv starship &>/dev/null
@@ -89,9 +85,4 @@ end
 # Direnv
 if command -qv direnv &>/dev/null
     eval (direnv hook fish)
-end
-
-# Docker
-if command -qv docker &>/dev/null && command -qv dockercolorize &>/dev/null
-    source (dirname (status --current-filename))/docker.fish
 end

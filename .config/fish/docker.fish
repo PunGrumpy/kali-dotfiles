@@ -1,5 +1,0 @@
-alias dps "docker ps | dockercolorize"
-alias dpsa "docker ps -a | dockercolorize"
-alias di "docker images | dockercolorize"
-alias dcps "docker compose ps | dockercolorize"
-alias dstats "docker stats --no-stream | dockercolorize"
