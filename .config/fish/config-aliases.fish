@@ -8,6 +8,7 @@ command -qv nvim; and alias vim nvim
 
 # EZA
 if command -q eza
+    alias ls "eza"
     alias ll "eza -l -g --icons"
     alias lla "ll -a"
 end
